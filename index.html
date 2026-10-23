@@ -236,19 +236,34 @@
           <h2 class="text-xl font-extrabold text-slate-900">30 Saniyede Ücretsiz İlan Ver</h2>
           <p class="text-xs text-slate-500 mt-1">İlanınız anında ortak vitrinde yayınlanacaktır.</p>
         </div>
+        
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Elinizdeki Ürün Ne?</label>
-          <input id="my-item" type="text" required placeholder="Örn: Akıllı Saat, Kamp Çadırı..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input id="my-item" type="text" required placeholder="Örn: Akıllı Saat, Kamp Çadırı, Kitap..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-[10px] text-slate-400 self-center font-semibold">Hızlı Seç:</span>
+            <button type="button" onclick="setMyItem('Telefon / Tablet')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📱 Telefon/Tablet</button>
+            <button type="button" onclick="setMyItem('Kamp / Outdoor Malzemesi')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">⛺ Kamp/Outdoor</button>
+            <button type="button" onclick="setMyItem('Kitap / Ders Notları')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📚 Kitap/Ders Notu</button>
+          </div>
         </div>
+
         <div>
           <label class="block text-xs font-extrabold text-brand-700 mb-1.5">Karşılığında Ne İstersiniz?</label>
-          <input id="wanted-item" type="text" required placeholder="Örn: Tablet veya Askıda Takas (Öğrenciye Ücretsiz)..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input id="wanted-item" type="text" required placeholder="Örn: Tablet, Kulaklık veya Askıda Takas..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-[10px] text-brand-400 self-center font-semibold">Hızlı Seç:</span>
+            <button type="button" onclick="setWantedItem('🎓 Askıda Takas (Öğrenciye Ücretsiz Hediye)')" class="text-xs font-extrabold bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded-xl transition-colors shadow-sm">🎓 Askıda Takas (Ücretsiz)</button>
+            <button type="button" onclick="setWantedItem('Farketmez, Her Şeye Açığım! 🔥')" class="text-xs font-extrabold bg-brand-100 hover:bg-brand-200 text-brand-800 px-2.5 py-1 rounded-xl transition-colors">✨ Her Şeye Açığım</button>
+          </div>
         </div>
+
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İlan Açıklaması & Detaylar</label>
           <textarea id="item-desc" rows="3" placeholder="Ürününüzün durumunu yazın..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none font-medium"></textarea>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İl</label>
             <select id="citySelect" required onchange="loadDistricts()" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl font-semibold text-slate-700">
@@ -261,11 +276,23 @@
               <option value="">Önce İl Seçiniz</option>
             </select>
           </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Cep Telefonu</label>
+            <input id="item-phone" type="tel" required placeholder="05XX XXX XX XX" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          </div>
         </div>
+
+        <!-- FOTOĞRAF YÜKLEME ALANI -->
         <div>
-          <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Ürün Fotoğrafı (Web Bağlantısı veya Örnek Görsel)</label>
-          <input id="item-img" type="text" placeholder="https://images.unsplash.com/... (Görsel URL)" value="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80" required class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+          <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Ürün Fotoğrafları</label>
+          <div onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-2xl p-5 text-center bg-slate-50 cursor-pointer transition-colors flex flex-col items-center justify-center gap-2">
+            <i class="fa-solid fa-images text-brand-500 text-2xl"></i>
+            <span id="uploadStatusText" class="text-xs font-bold text-slate-600">Fotoğraf Seçmek İçin Dokunun (Birden Fazla Seçilebilir)</span>
+            <span class="text-[10px] text-slate-400">(PNG, JPG, WEBP desteklenir)</span>
+            <input type="file" id="fileInput" accept="image/*" multiple class="hidden" onchange="handleFileSelect(this)">
+          </div>
         </div>
+
         <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg">
           İlanı Canlıya Yayınla
         </button>
@@ -275,11 +302,12 @@
 
   <script>
     // SUPABASE BAĞLANTI AYARLARI
-    const SUPABASE_URL = 'https://rogexfbxwvpmzptwhjcr.supabase.co';
+    const SUPABASE_URL = 'https://rogexfbxwpmpzptwhjcr.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_fSPfiOhN9Rb3F4AimP5Muw_shTFMKcG';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let currentUser = null;
+    let uploadedImagesBase64 = ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80"];
 
     // Google ile Giriş
     async function loginWithGoogle() {
@@ -328,6 +356,25 @@
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW hatası:', err));
+    }
+
+    function setMyItem(val) { document.getElementById('my-item').value = val; }
+    function setWantedItem(val) { document.getElementById('wanted-item').value = val; }
+
+    function handleFileSelect(input) {
+      if (input.files && input.files.length > 0) {
+        uploadedImagesBase64 = [];
+        const files = Array.from(input.files);
+        document.getElementById('uploadStatusText').innerHTML = '✓ Seçilen: <span class="text-emerald-600 font-extrabold">' + files.length + ' Fotoğraf Eklendi</span>';
+        
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            uploadedImagesBase64.push(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
     }
 
     // 81 İL VE TÜM İLÇELER VERİTABANI
@@ -454,7 +501,7 @@
         .order('created_at', { ascending: false });
 
       if (error) {
-        container.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-6">İlan tablosu henüz oluşturulmadı. Lütfen Supabase panelinden tablo oluşturun.</p>';
+        container.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-6">İlan tablosu yüklenirken hata oluştu.</p>';
         return;
       }
 
@@ -498,27 +545,33 @@
 
       const title = document.getElementById('my-item').value;
       const wanted = document.getElementById('wanted-item').value;
-      const description = document.getElementById('item-desc').value;
+      const descriptionText = document.getElementById('item-desc').value || "Açıklama yok.";
+      const phone = document.getElementById('item-phone').value;
       const city = document.getElementById('citySelect').value;
       const district = document.getElementById('districtSelect').value;
-      const image_url = document.getElementById('item-img').value;
+
+      // Telefon numarasını ve açıklamayı birleştirip kaydediyoruz (Mevcut Supabase tablosuyla tam uyumlu)
+      const fullDescription = `${descriptionText} | Tel: ${phone}`;
+      const mainImage = uploadedImagesBase64[0] || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f';
 
       const { data, error } = await supabaseClient
         .from('listings')
         .insert([{
           title,
           wanted,
-          description,
+          description: fullDescription,
           location: district + ', ' + city,
-          image_url,
+          image_url: mainImage,
           user_email: currentUser ? currentUser.email : 'Misafir'
         }]);
 
       if (error) {
         alert('İlan eklenirken hata oluştu: ' + error.message);
       } else {
-        alert('🎉 İlanınız başarıyla ortak veritabanında yayınlandı!');
+        alert('🎉 İlanınız başarıyla ortak vitrinde yayınlandı!');
         document.getElementById('createListingForm').reset();
+        uploadedImagesBase64 = ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80"];
+        document.getElementById('uploadStatusText').innerText = "Fotoğraf Seçmek İçin Dokunun (Birden Fazla Seçilebilir)";
         showPage('home');
         renderListings();
       }
