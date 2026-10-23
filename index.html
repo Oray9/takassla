@@ -287,13 +287,13 @@
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Ürün Fotoğrafları</label>
           <div onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-2xl p-5 text-center bg-slate-50 cursor-pointer transition-colors flex flex-col items-center justify-center gap-2">
             <i class="fa-solid fa-images text-brand-500 text-2xl"></i>
-            <span id="uploadStatusText" class="text-xs font-bold text-slate-600">Fotoğraf Seçmek İçin Dokunun (Birden Fazla Seçilebilir)</span>
-            <span class="text-[10px] text-slate-400">(PNG, JPG, WEBP desteklenir)</span>
+            <span id="uploadStatusText" class="text-xs font-bold text-slate-600">Fotoğraf Seçmek İçin Dokunun (Örn: İnternetten Bulduğun Görsel Linki de Olabilir)</span>
+            <span class="text-[10px] text-slate-400">(Büyük fotoğraflar yerine örnek görsel kullanmak performansı artırır)</span>
             <input type="file" id="fileInput" accept="image/*" multiple class="hidden" onchange="handleFileSelect(this)">
           </div>
         </div>
 
-        <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg">
+        <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg">
           İlanı Canlıya Yayınla
         </button>
       </form>
@@ -318,18 +318,24 @@
     }
 
     async function checkUser() {
-      const { data: { user } } = await supabaseClient.auth.getUser();
-      currentUser = user;
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      currentUser = session ? session.user : null;
       const authContainer = document.getElementById('authContainer');
-      if (user) {
+      if (currentUser) {
         authContainer.innerHTML = `
           <div class="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-2xl text-xs font-bold text-slate-700">
-            <span>👤 ${user.email.split('@')[0]}</span>
+            <span>👤 ${currentUser.email.split('@')[0]}</span>
             <button onclick="logout()" class="text-rose-500 hover:underline ml-1">Çıkış</button>
           </div>
         `;
       }
     }
+
+    // Oturum değişikliklerini dinle
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      currentUser = session ? session.user : null;
+      checkUser();
+    });
 
     async function logout() {
       await supabaseClient.auth.signOut();
@@ -501,7 +507,7 @@
         .order('created_at', { ascending: false });
 
       if (error) {
-        container.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-6">İlan tablosu yüklenirken hata oluştu.</p>';
+        container.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-6">İlanlar yüklenirken hata oluştu.</p>';
         return;
       }
 
@@ -539,9 +545,18 @@
       });
     }
 
-    // İLAN EKLEME (SUPABASE'E KAYDETME)
+    // İLAN EKLEME (KONTROLLÜ & GÜVENLİ)
     async function handleCreateListing(event) {
       event.preventDefault();
+
+      if (!currentUser) {
+        alert('⚠️ İlan verebilmek için lütfen önce Google ile giriş yapın!');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Yayınlanıyor, Lütfen Bekleyin...";
 
       const title = document.getElementById('my-item').value;
       const wanted = document.getElementById('wanted-item').value;
@@ -550,7 +565,6 @@
       const city = document.getElementById('citySelect').value;
       const district = document.getElementById('districtSelect').value;
 
-      // Telefon numarasını ve açıklamayı birleştirip kaydediyoruz (Mevcut Supabase tablosuyla tam uyumlu)
       const fullDescription = `${descriptionText} | Tel: ${phone}`;
       const mainImage = uploadedImagesBase64[0] || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f';
 
@@ -562,8 +576,11 @@
           description: fullDescription,
           location: district + ', ' + city,
           image_url: mainImage,
-          user_email: currentUser ? currentUser.email : 'Misafir'
+          user_email: currentUser.email
         }]);
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = "İlanı Canlıya Yayınla";
 
       if (error) {
         alert('İlan eklenirken hata oluştu: ' + error.message);
@@ -571,13 +588,18 @@
         alert('🎉 İlanınız başarıyla ortak vitrinde yayınlandı!');
         document.getElementById('createListingForm').reset();
         uploadedImagesBase64 = ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80"];
-        document.getElementById('uploadStatusText').innerText = "Fotoğraf Seçmek İçin Dokunun (Birden Fazla Seçilebilir)";
+        document.getElementById('uploadStatusText').innerText = "Fotoğraf Seçmek İçin Dokunun";
         showPage('home');
         renderListings();
       }
     }
 
     function showPage(pageId) {
+      if (pageId === 'create' && !currentUser) {
+        alert('⚠️ İlan verebilmek için önce Google ile giriş yapmalısınız!');
+        loginWithGoogle();
+        return;
+      }
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       document.getElementById('page-' + pageId).classList.remove('hidden');
       window.scrollTo(0, 0);
