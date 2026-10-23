@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>takassla.com - Paranı Unut, Takas Et!</title>
   
-  <!-- PWA & MOBİL UYGULAMA ETİKETLERİ -->
+  <!-- PWA & MANIFEST BAĞLANTISI -->
+  <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#ea580c">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,6 +37,21 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased pb-20 lg:pb-0">
 
+  <!-- OTOMATİK PWA YÜKLEME BARI (POP-UP) -->
+  <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-slate-900 text-white p-4 rounded-3xl shadow-2xl z-50 hidden border border-slate-700 flex items-center justify-between gap-3 animate-bounce">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-2xl bg-brand-500 flex items-center justify-center text-white font-extrabold text-xl">⇄</div>
+      <div>
+        <h4 class="text-xs font-extrabold">takassla Uygulaması</h4>
+        <p class="text-[10px] text-slate-300">Ana ekranına ekle, hızlı takas et!</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="pwaInstallBtn" class="bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md">Yükle</button>
+      <button onclick="document.getElementById('pwaInstallBanner').classList.add('hidden')" class="text-slate-400 hover:text-white text-sm px-1">✕</button>
+    </div>
+  </div>
+
   <!-- TOP ANNOUNCEMENT BAR -->
   <div class="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-accent text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center shadow-inner">
     ✨ Türkiye'nin İlk Paranızın Geçmediği Eğlenceli Takas Platformu! <span class="underline ml-1 cursor-pointer" onclick="showPage('home')">Nasıl Çalışır?</span>
@@ -60,23 +76,18 @@
         <!-- AKILLI ARAMA ÇUBUĞU -->
         <div class="hidden md:flex flex-1 max-w-2xl mx-6">
           <div class="w-full flex items-center bg-white border border-slate-300 rounded-full shadow-md hover:shadow-lg transition-shadow p-1.5 focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
-            
             <div class="flex-1 px-4 border-r border-slate-200">
               <label class="block text-[10px] uppercase tracking-wider font-extrabold text-slate-400">Sende Ne Var?</label>
               <input type="text" placeholder="Örn: iPhone 11, Çadır, Kitap..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
             </div>
-
             <div class="text-slate-300 px-1"><i class="fa-solid fa-arrows-rotate text-xs"></i></div>
-
             <div class="flex-1 px-4">
               <label class="block text-[10px] uppercase tracking-wider font-extrabold text-brand-600">Ne İstiyorsun?</label>
               <input type="text" placeholder="Örn: PS5, Kamp Malzemesi..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
             </div>
-
             <button class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95">
               <i class="fa-solid fa-magnifying-glass text-sm"></i>
             </button>
-
           </div>
         </div>
 
@@ -98,8 +109,6 @@
 
   <!-- PAGE 1: ANA SAYFA -->
   <div id="page-home" class="page-content">
-    
-    <!-- DİNAMİK SLIDER HERO BANNER -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-brand-dark rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden min-h-[260px] flex items-center">
         <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl"></div>
@@ -137,7 +146,6 @@
       </div>
     </section>
 
-    <!-- CANLI TAKAS BANDI -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 flex items-center justify-between text-xs font-bold text-amber-900 shadow-sm">
         <div class="flex items-center gap-2 overflow-hidden">
@@ -148,7 +156,6 @@
       </div>
     </section>
 
-    <!-- KATEGORİ SEÇİCİ -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
@@ -161,7 +168,6 @@
         <button class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-md font-bold text-sm whitespace-nowrap hover:scale-105 transition-transform">
           <i class="fa-solid fa-heart animate-bounce"></i> Askıda Takas (Öğrenciye Ücretsiz)
         </button>
-
         <button class="flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-900 text-white shadow-md font-semibold text-sm whitespace-nowrap">
           <i class="fa-solid fa-fire text-amber-400"></i> Tüm İlanlar
         </button>
@@ -180,7 +186,6 @@
       </div>
     </section>
 
-    <!-- İLANLAR GRID -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div class="flex items-center justify-between mb-6">
         <div>
@@ -190,8 +195,6 @@
       </div>
 
       <div id="listingsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
-        <!-- SABİT İLAN 1 -->
         <div class="bg-gradient-to-b from-rose-50/50 to-white rounded-3xl overflow-hidden border-2 border-rose-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
           <div>
             <div class="relative aspect-square overflow-hidden bg-slate-100">
@@ -208,14 +211,12 @@
               </div>
               <h3 class="font-extrabold text-slate-900 text-base line-clamp-1">Mühendislik Ders Kitapları & Masa Lambası</h3>
               <p class="text-xs text-slate-500 mt-1 line-clamp-2">İhtiyacı olan üniversite öğrencisine karşılıksız hediye edilecektir.</p>
-              
               <div class="mt-4 p-3 bg-rose-50 rounded-2xl border border-rose-100">
                 <span class="block text-[10px] font-extrabold text-rose-700 uppercase">Karşılığında Beklenen:</span>
                 <p class="text-xs font-bold text-rose-900">Karşılıksız (Öğrenci Kimliği Yeterli)</p>
               </div>
             </div>
           </div>
-
           <div class="p-4 pt-0">
             <button onclick="showPage('detail')" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs py-3 rounded-xl transition-all flex items-center justify-center gap-2">
               <i class="fa-solid fa-graduation-cap"></i>
@@ -224,7 +225,6 @@
           </div>
         </div>
 
-        <!-- SABİT İLAN 2 -->
         <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
           <div>
             <div class="relative aspect-square overflow-hidden bg-slate-100">
@@ -238,14 +238,12 @@
               </div>
               <h3 class="font-extrabold text-slate-900 text-base line-clamp-1">PlayStation 5 Digital Edition</h3>
               <p class="text-xs text-slate-500 mt-1 line-clamp-2">Sıfır ayarında, 2 kol ile birlikte verilecek.</p>
-              
               <div class="mt-4 p-3 bg-gradient-to-r from-brand-50 to-purple-50 rounded-2xl border border-brand-100">
                 <span class="block text-[10px] font-extrabold text-brand-700 uppercase">Aradığı Takas:</span>
                 <p class="text-xs font-bold text-slate-800">iPhone 13 veya Oyuncu Laptopu</p>
               </div>
             </div>
           </div>
-
           <div class="p-4 pt-0">
             <button onclick="showPage('detail')" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-3 rounded-xl transition-all flex items-center justify-center gap-2">
               <i class="fa-solid fa-handshake"></i>
@@ -254,7 +252,6 @@
           </div>
         </div>
 
-        <!-- SABİT İLAN 3 -->
         <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
           <div>
             <div class="relative aspect-square overflow-hidden bg-slate-100">
@@ -268,14 +265,12 @@
               </div>
               <h3 class="font-extrabold text-slate-900 text-base line-clamp-1">4 Kişilik Otomatik Kamp Çadırı + Sandalyeler</h3>
               <p class="text-xs text-slate-500 mt-1 line-clamp-2">Su geçirmez, 2 kez kullanıldı sıfır gibi.</p>
-              
               <div class="mt-4 p-3 bg-gradient-to-r from-brand-50 to-purple-50 rounded-2xl border border-brand-100">
                 <span class="block text-[10px] font-extrabold text-brand-700 uppercase">Aradığı Takas:</span>
                 <p class="text-xs font-bold text-slate-800">GoPro Aksiyon Kamerası veya Bisiklet</p>
               </div>
             </div>
           </div>
-
           <div class="p-4 pt-0">
             <button onclick="showPage('detail')" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-3 rounded-xl transition-all flex items-center justify-center gap-2">
               <i class="fa-solid fa-handshake"></i>
@@ -287,7 +282,6 @@
       </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 mt-20 border-t border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-xs">
@@ -325,7 +319,6 @@
         </div>
       </div>
     </footer>
-
   </div>
 
   <!-- PAGE 2: İLAN DETAY SAYFASI -->
@@ -343,12 +336,10 @@
           </div>
           <h1 id="detailTitle" class="text-2xl font-extrabold text-slate-900 mt-1">PlayStation 5 Digital Edition</h1>
           <p id="detailDesc" class="text-xs text-slate-500 mt-2">Sıfır ayarında, temiz kullanıldı.</p>
-          
           <div class="mt-4 p-4 bg-brand-50 rounded-2xl border border-brand-200">
             <span class="block text-xs font-extrabold text-brand-700 uppercase">İlan Sahibinin Aradığı Takas:</span>
             <p id="detailWanted" class="text-sm font-bold text-slate-900 mt-1">iPhone 13 veya Oyuncu Laptopu</p>
           </div>
-
           <div class="mt-4 p-3.5 bg-blue-50 border border-blue-200 rounded-2xl text-xs text-blue-900 flex items-start gap-2.5">
             <i class="fa-solid fa-shield-halved text-blue-600 text-base mt-0.5"></i>
             <div>
@@ -356,7 +347,6 @@
               <span>Takas işlemlerinizi kamuya açık alanlarda (AVM, Metro vb.) yüz yüze gerçekleştirin.</span>
             </div>
           </div>
-
           <button onclick="alert('🎉 Takas teklifiniz ilan sahibine iletildi!')" class="w-full mt-6 bg-gradient-to-r from-brand-600 to-brand-500 text-white font-extrabold text-sm py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all">
             Hemen Takas Teklifi Gönder
           </button>
@@ -369,18 +359,14 @@
   <div id="page-create" class="page-content hidden">
     <div class="max-w-2xl mx-auto px-4 mt-8">
       <button onclick="showPage('home')" class="text-xs font-bold text-brand-600 mb-4 inline-block">← Vazgeç / Ana Sayfaya Dön</button>
-      
       <form id="createListingForm" onsubmit="handleCreateListing(event)" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
         <div>
           <h2 class="text-xl font-extrabold text-slate-900">30 Saniyede Ücretsiz İlan Ver</h2>
           <p class="text-xs text-slate-500 mt-1">İlanınız anında vitrinde yayınlanacaktır.</p>
         </div>
-        
-        <!-- ADIM 1: ELİNİZDEKİ ÜRÜN -->
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Elinizdeki Ürün Ne?</label>
           <input id="my-item" type="text" required placeholder="Örn: Akıllı Saat, Kamp Çadırı, Ders Kitapları..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
-          
           <div class="flex flex-wrap gap-2 mt-2">
             <span class="text-[10px] text-slate-400 self-center font-semibold">Hızlı Seç:</span>
             <button type="button" onclick="setMyItem('Telefon / Tablet')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📱 Telefon/Tablet</button>
@@ -388,26 +374,19 @@
             <button type="button" onclick="setMyItem('Kitap / Ders Notları')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📚 Kitap/Ders Notu</button>
           </div>
         </div>
-
-        <!-- ADIM 2: KARŞILIĞINDA NE İSTİYOR -->
         <div>
           <label class="block text-xs font-extrabold text-brand-700 mb-1.5">Karşılığında Ne İstersiniz?</label>
           <input id="wanted-item" type="text" required placeholder="Örn: Tablet, Kulaklık veya Askıda Takas (Öğrenciye Ücretsiz)..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
-          
           <div class="flex flex-wrap gap-2 mt-2">
             <span class="text-[10px] text-brand-400 self-center font-semibold">Hızlı Seç:</span>
             <button type="button" onclick="setWantedItem('🎓 Askıda Takas (Öğrenciye Ücretsiz Hediye)')" class="text-xs font-extrabold bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded-xl transition-colors shadow-sm">🎓 Askıda Takas (Öğrenciye Ücretsiz)</button>
             <button type="button" onclick="setWantedItem('Farketmez, Her Şeye Açığım! 🔥')" class="text-xs font-extrabold bg-brand-100 hover:bg-brand-200 text-brand-800 px-2.5 py-1 rounded-xl transition-colors">✨ Her Şeye Açığım</button>
           </div>
         </div>
-
-        <!-- AÇIKLAMA METİN KUTUSU -->
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İlan Açıklaması & Detaylar</label>
           <textarea id="item-desc" rows="3" placeholder="Ürününüzün durumunu, takas şartlarınızı veya hediye ediliyorsa detaylarını buraya yazabilirsiniz..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium placeholder:text-slate-400 resize-none"></textarea>
         </div>
-
-        <!-- ADIM 3: KONUM (İL VE İLÇE) VE TELEFON -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İl</label>
@@ -426,8 +405,6 @@
             <input type="tel" required placeholder="05XX XXX XX XX" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500">
           </div>
         </div>
-
-        <!-- FOTOĞRAF YÜKLEME VE KAMERA ALANI -->
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Ürün Fotoğrafı</label>
           <div onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-2xl p-5 text-center bg-slate-50 cursor-pointer transition-colors flex flex-col items-center justify-center gap-2">
@@ -437,11 +414,9 @@
             <input type="file" id="fileInput" accept="image/*" class="hidden" onchange="handleFileSelect(this)">
           </div>
         </div>
-
         <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg hover:shadow-xl">
           İlanı Hemen Yayınla
         </button>
-
       </form>
     </div>
   </div>
@@ -457,6 +432,27 @@
   </div>
 
   <script>
+    // PWA Otomatik Yükleme İstemci Kodu
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwaInstallBanner').classList.remove('hidden');
+    });
+
+    document.getElementById('pwaInstallBtn').addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        document.getElementById('pwaInstallBanner').classList.add('hidden');
+      }
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW hatası:', err));
+    }
+
     const turkeyData = [
       { name: "Adana", districts: ["Aladağ", "Ceyhan", "Çukurova", "Feke", "İmamoğlu", "Karaisalı", "Kozan", "Pozantı", "Saimbeyli", "Sarıçam", "Seyhan", "Tufanbeyli", "Yumurtalık", "Yüreğir"] },
       { name: "Adıyaman", districts: ["Besni", "Çelikhan", "Gerger", "Gölbaşı", "Kahta", "Merkez", "Samsat", "Sincik", "Tut"] },
@@ -498,7 +494,7 @@
       { name: "Iğdır", districts: ["Aralık", "Karakoyunlu", "Merkez", "Tuzluca"] },
       { name: "Isparta", districts: ["Aksu", "Atabey", "Eğirdir", "Gelendost", "Gönen", "Keçiborlu", "Merkez", "Senirkent", "Sütçüler", "Şarkikaraağaç", "Uluborlu", "Yalvaç", "Yenişarbademli"] },
       { name: "İstanbul", districts: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"] },
-      { name: "İzmir", districts: ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeşme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"] },
+      { name: "İzmir", districts: ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeshme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"] },
       { name: "Kahramanmaraş", districts: ["Afşin", "Andırın", "Çağlayancerit", "Dulkadiroğlu", "Ekinözü", "Elbistan", "Göksun", "Nurhak", "Onikişubat", "Pazarcık", "Türkoğlu"] },
       { name: "Karabük", districts: ["Eflani", "Eskipazar", "Merkez", "Ovacık", "Safranbolu", "Yenice"] },
       { name: "Karaman", districts: ["Ayrancı", "Başyayla", "Ermenek", "Kazımkarabekir", "Merkez", "Sarıveliler"] },
