@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <button id="pwaInstallBtn" class="bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md">Yükle</button>
+      <button onclick="triggerInstall()" class="bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md">Yükle</button>
       <button onclick="document.getElementById('pwaInstallBanner').classList.add('hidden')" class="text-slate-400 hover:text-white text-sm px-1">✕</button>
     </div>
   </div>
@@ -93,6 +93,13 @@
 
         <!-- SAĞ EYLEM BUTONLARI -->
         <div class="flex items-center gap-3">
+          
+          <!-- UYGULAMAYI İNDİR BUTONU (Tarayıcı desteğiyle görünür) -->
+          <button id="headerInstallBtn" onclick="triggerInstall()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all items-center gap-2">
+            <i class="fa-solid fa-download"></i>
+            <span>Uygulamayı İndir</span>
+          </button>
+
           <button onclick="showPage('home')" class="hidden sm:flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-brand-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition-colors">
             <span>Ana Sayfa</span>
           </button>
@@ -432,22 +439,27 @@
   </div>
 
   <script>
-    // PWA Otomatik Yükleme İstemci Kodu
+    // PWA Kurulum Yönetimi
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
+      // Hem alt banner'ı hem de sağ üstteki butonu görünür yap
       document.getElementById('pwaInstallBanner').classList.remove('hidden');
+      const headerBtn = document.getElementById('headerInstallBtn');
+      if (headerBtn) headerBtn.classList.remove('hidden');
     });
 
-    document.getElementById('pwaInstallBtn').addEventListener('click', async () => {
+    async function triggerInstall() {
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         deferredPrompt = null;
         document.getElementById('pwaInstallBanner').classList.add('hidden');
+        const headerBtn = document.getElementById('headerInstallBtn');
+        if (headerBtn) headerBtn.classList.add('hidden');
       }
-    });
+    }
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW hatası:', err));
@@ -494,7 +506,7 @@
       { name: "Iğdır", districts: ["Aralık", "Karakoyunlu", "Merkez", "Tuzluca"] },
       { name: "Isparta", districts: ["Aksu", "Atabey", "Eğirdir", "Gelendost", "Gönen", "Keçiborlu", "Merkez", "Senirkent", "Sütçüler", "Şarkikaraağaç", "Uluborlu", "Yalvaç", "Yenişarbademli"] },
       { name: "İstanbul", districts: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"] },
-      { name: "İzmir", districts: ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeshme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"] },
+      { name: "İzmir", districts: ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeşme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"] },
       { name: "Kahramanmaraş", districts: ["Afşin", "Andırın", "Çağlayancerit", "Dulkadiroğlu", "Ekinözü", "Elbistan", "Göksun", "Nurhak", "Onikişubat", "Pazarcık", "Türkoğlu"] },
       { name: "Karabük", districts: ["Eflani", "Eskipazar", "Merkez", "Ovacık", "Safranbolu", "Yenice"] },
       { name: "Karaman", districts: ["Ayrancı", "Başyayla", "Ermenek", "Kazımkarabekir", "Merkez", "Sarıveliler"] },
