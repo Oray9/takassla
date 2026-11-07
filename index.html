@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -689,3 +690,667 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>takassla.com - Paranı Unut, Takas Et!</title>
+  
+  <!-- PWA & MANIFEST BAĞLANTISI -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea580c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="takassla">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SUPABASE KÜTÜPHANESİ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+          colors: {
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', dark: '#0f172a', accent: '#8b5cf6' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .glass-effect { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased pb-20 lg:pb-0">
+
+  <!-- OTOMATİK PWA YÜKLEME BARI -->
+  <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-slate-900 text-white p-4 rounded-3xl shadow-2xl z-50 hidden border border-slate-700 flex items-center justify-between gap-3 animate-bounce">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-2xl bg-brand-500 flex items-center justify-center text-white font-extrabold text-xl">⇄</div>
+      <div>
+        <h4 class="text-xs font-extrabold">takassla Uygulaması</h4>
+        <p class="text-[10px] text-slate-300">Ana ekranına ekle, hızlı takas et!</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="triggerInstall()" class="bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md">Yükle</button>
+      <button onclick="document.getElementById('pwaInstallBanner').classList.add('hidden')" class="text-slate-400 hover:text-white text-sm px-1">✕</button>
+    </div>
+  </div>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-accent text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center shadow-inner">
+    ✨ Türkiye'nin İlk Paranızın Geçmediği Eğlenceli Takas Platformu! <span class="underline ml-1 cursor-pointer" onclick="showPage('home')">Nasıl Çalışır?</span>
+  </div>
+
+  <!-- HEADER / NAVIGATION -->
+  <header class="sticky top-0 z-40 glass-effect border-b border-slate-200/80 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- LOGO -->
+        <a href="#" onclick="showPage('home')" class="flex items-center gap-2 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
+            <i class="fa-solid font-black text-xl">⇄</i>
+          </div>
+          <div>
+            <span class="text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-brand-600 transition-colors">takass<span class="text-brand-500">la.com</span></span>
+            <span class="block text-[10px] font-bold text-slate-400 tracking-widest uppercase -mt-1">Akıllı Değişim</span>
+          </div>
+        </a>
+
+        <!-- AKILLI ARAMA ÇUBUĞU -->
+        <div class="hidden md:flex flex-1 max-w-2xl mx-6">
+          <div class="w-full flex items-center bg-white border border-slate-300 rounded-full shadow-md hover:shadow-lg transition-shadow p-1.5 focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
+            <div class="flex-1 px-4 border-r border-slate-200">
+              <label class="block text-[10px] uppercase tracking-wider font-extrabold text-slate-400">Sende Ne Var?</label>
+              <input type="text" placeholder="Örn: iPhone 11, Çadır, Kitap..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
+            </div>
+            <div class="text-slate-300 px-1"><i class="fa-solid fa-arrows-rotate text-xs"></i></div>
+            <div class="flex-1 px-4">
+              <label class="block text-[10px] uppercase tracking-wider font-extrabold text-brand-600">Ne İstiyorsun?</label>
+              <input type="text" placeholder="Örn: PS5, Kamp Malzemesi..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
+            </div>
+            <button class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95">
+              <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- SAĞ EYLEM BUTONLARI -->
+        <div class="flex items-center gap-3">
+          <button id="headerInstallBtn" onclick="triggerInstall()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl shadow-lg transition-all items-center gap-2">
+            <i class="fa-solid fa-mobile-screen-button text-sm"></i>
+            <span>Uygulamayı İndir</span>
+          </button>
+
+          <!-- KULLANICI GİRİŞ DURUMU -->
+          <div id="authContainer">
+            <button onclick="openLoginModal()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl shadow-sm transition-all flex items-center gap-2">
+              <i class="fa-solid fa-envelope text-brand-500"></i>
+              <span>Giriş Yap / Kayıt Ol</span>
+            </button>
+          </div>
+          
+          <button onclick="showPage('create')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm px-5 py-3 rounded-2xl shadow-lg transition-all hover:-translate-y-0.5 flex items-center gap-2">
+            <i class="fa-solid fa-plus text-brand-500"></i>
+            <span>İlan Ver</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- GİRİŞ MODALI -->
+  <div id="loginModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
+      <button onclick="closeLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 font-bold text-lg">✕</button>
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl font-black">✉</div>
+        <h3 class="text-xl font-extrabold text-slate-900">E-posta ile Hızlı Giriş</h3>
+        <p class="text-xs text-slate-500 mt-1">E-postanızı girin, size tek tıkla giriş linki gönderelim.</p>
+      </div>
+      <form onsubmit="handleEmailLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1">E-posta Adresiniz</label>
+          <input id="loginEmail" type="email" required placeholder="ornek@mail.com" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+        </div>
+        <button type="submit" id="loginBtn" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm py-3.5 rounded-2xl transition-all shadow-md">
+          Giriş Linki Gönder
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PAGE 1: ANA SAYFA -->
+  <div id="page-home" class="page-content">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+      <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-brand-dark rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden min-h-[260px] flex items-center">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute right-1/3 -top-10 w-64 h-64 bg-brand-accent/20 rounded-full blur-3xl"></div>
+
+        <div id="slide-1" class="banner-slide max-w-2xl relative z-10 transition-opacity duration-500">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-white/10 backdrop-blur-md border border-white/20 text-brand-100 mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Canlı Takas Piyasası
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Eşyalarını Nakde Değil, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-amber-300">Hayallerine</span> Dönüştür!
+          </h1>
+          <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+            Evinizde duran, kullanmadığınız eşyaları yükleyin; aradığınız binlerce ürünle doğrudan ve güvenle takas edin.
+          </p>
+        </div>
+
+        <div id="slide-2" class="banner-slide max-w-2xl relative z-10 hidden transition-opacity duration-500">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-rose-500/25 backdrop-blur-md border border-rose-500/30 text-rose-300 mb-4">
+            🎓 Askıda Takas Sosyal Sorumluluk
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Kullanmadığın Eşyalar <span class="text-rose-400">Öğrencilere</span> Umut Olsun!
+          </h1>
+          <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+            Kullanmadığınız ders kitaplarını, çalışma masanızı veya ev eşyalarınızı öğrenciler için "Askıda Takas" ile ücretsiz paylaşabilirsiniz.
+          </p>
+        </div>
+
+        <div class="absolute right-6 bottom-6 flex gap-2 z-20">
+          <button onclick="toggleBanner(1)" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all">←</button>
+          <button onclick="toggleBanner(2)" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESİMLİ KATEGORİ KARTLARI -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-grid-2 text-brand-500"></i> Öne Çıkan Kategoriler
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+        <a href="#" class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-sm hover:shadow-xl transition-all">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover opacity-75 group-hover:scale-110 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 flex flex-col justify-end">
+            <span class="text-white font-extrabold text-xs">Telefon & Tablet</span>
+          </div>
+        </a>
+        <a href="#" class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-sm hover:shadow-xl transition-all">
+          <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover opacity-75 group-hover:scale-110 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 flex flex-col justify-end">
+            <span class="text-white font-extrabold text-xs">Bisiklet & Spor</span>
+          </div>
+        </a>
+        <a href="#" class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-sm hover:shadow-xl transition-all">
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover opacity-75 group-hover:scale-110 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 flex flex-col justify-end">
+            <span class="text-white font-extrabold text-xs">Kamp & Outdoor</span>
+          </div>
+        </a>
+        <a href="#" class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-sm hover:shadow-xl transition-all">
+          <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover opacity-75 group-hover:scale-110 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 flex flex-col justify-end">
+            <span class="text-white font-extrabold text-xs">Kitap & Kırtasiye</span>
+          </div>
+        </a>
+        <a href="#" class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-sm hover:shadow-xl transition-all">
+          <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover opacity-75 group-hover:scale-110 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 flex flex-col justify-end">
+            <span class="text-white font-extrabold text-xs">Oyun & Konsol</span>
+          </div>
+        </a>
+        <a href="#" class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-sm hover:shadow-xl transition-all">
+          <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover opacity-75 group-hover:scale-110 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 flex flex-col justify-end">
+            <span class="text-white font-extrabold text-xs">Giyim & Moda</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ANA İLANLAR VİTRİNİ -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Vitrin İlanları</h2>
+          <p class="text-xs text-slate-500 font-medium">Sana yakın en son eklenen takas ve askıda eşya fırsatları</p>
+        </div>
+      </div>
+
+      <div id="listingsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Veritabanından dinamik dolacak -->
+      </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 mt-20 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-xs">
+        © 2026 takassla.com - Tüm hakları saklıdır. Paranın geçmediği tek platform.
+      </div>
+    </footer>
+  </div>
+
+  <!-- PAGE 3: İLAN VERME FORMU -->
+  <div id="page-create" class="page-content hidden">
+    <div class="max-w-2xl mx-auto px-4 mt-8">
+      <button onclick="showPage('home')" class="text-xs font-bold text-brand-600 mb-4 inline-block">← Vazgeç / Ana Sayfaya Dön</button>
+      <form id="createListingForm" onsubmit="handleCreateListing(event)" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">30 Saniyede Ücretsiz İlan Ver</h2>
+          <p class="text-xs text-slate-500 mt-1">İlanınız anında ortak vitrinde yayınlanacaktır.</p>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Elinizdeki Ürün Ne?</label>
+          <input id="my-item" type="text" required placeholder="Örn: Akıllı Saat, Kamp Çadırı, Kitap..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-[10px] text-slate-400 self-center font-semibold">Hızlı Seç:</span>
+            <button type="button" onclick="setMyItem('Telefon / Tablet')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📱 Telefon/Tablet</button>
+            <button type="button" onclick="setMyItem('Kamp / Outdoor Malzemesi')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">⛺ Kamp/Outdoor</button>
+            <button type="button" onclick="setMyItem('Kitap / Ders Notları')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📚 Kitap/Ders Notu</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-brand-700 mb-1.5">Karşılığında Ne İstersiniz?</label>
+          <input id="wanted-item" type="text" required placeholder="Örn: Tablet, Kulaklık veya Askıda Takas..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="text-[10px] text-brand-400 self-center font-semibold">Hızlı Seç:</span>
+            <button type="button" onclick="setWantedItem('🎓 Askıda Takas (Öğrenciye Ücretsiz Hediye)')" class="text-xs font-extrabold bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded-xl transition-colors shadow-sm">🎓 Askıda Takas (Ücretsiz)</button>
+            <button type="button" onclick="setWantedItem('Farketmez, Her Şeye Açığım! 🔥')" class="text-xs font-extrabold bg-brand-100 hover:bg-brand-200 text-brand-800 px-2.5 py-1 rounded-xl transition-colors">✨ Her Şeye Açığım</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İlan Açıklaması & Detaylar</label>
+          <textarea id="item-desc" rows="3" placeholder="Ürününüzün durumunu yazın..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none font-medium"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İl</label>
+            <select id="citySelect" required onchange="loadDistricts()" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl font-semibold text-slate-700">
+              <option value="">İl Seçiniz</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İlçe</label>
+            <select id="districtSelect" required class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl font-semibold text-slate-700" disabled>
+              <option value="">Önce İl Seçiniz</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Cep Telefonu</label>
+            <input id="item-phone" type="tel" required placeholder="05XX XXX XX XX" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          </div>
+        </div>
+
+        <!-- FOTOĞRAF YÜKLEME ALANI -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Ürün Fotoğrafları</label>
+          <div onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-2xl p-5 text-center bg-slate-50 cursor-pointer transition-colors flex flex-col items-center justify-center gap-2">
+            <i class="fa-solid fa-images text-brand-500 text-2xl"></i>
+            <span id="uploadStatusText" class="text-xs font-bold text-slate-600">Fotoğraf Seçmek İçin Dokunun</span>
+            <input type="file" id="fileInput" accept="image/*" multiple class="hidden" onchange="handleFileSelect(this)">
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg">
+          İlanı Canlıya Yayınla
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // SUPABASE BAĞLANTI AYARLARI
+    const SUPABASE_URL = 'https://rogexfbxwpmpzptwhjcr.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_fSPfiOhN9Rb3F4AimP5Muw_shTFMKcG';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentUser = null;
+    let uploadedImagesBase64 = ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80"];
+
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+    }
+
+    // E-posta ile Giriş Linki Gönderme
+    async function handleEmailLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const loginBtn = document.getElementById('loginBtn');
+      
+      loginBtn.disabled = true;
+      loginBtn.innerText = "Gönderiliyor...";
+
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email: email,
+        options: {
+          emailRedirectTo: window.location.origin
+        }
+      });
+
+      loginBtn.disabled = false;
+      loginBtn.innerText = "Giriş Linki Gönder";
+
+      if (error) {
+        alert('Hata: ' + error.message);
+      } else {
+        alert('✨ Giriş bağlantısı e-posta adresinize gönderildi! Lütfen gelen kutunuzu (veya spam klasörünü) kontrol edin.');
+        closeLoginModal();
+      }
+    }
+
+    async function checkUser() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      currentUser = session ? session.user : null;
+      const authContainer = document.getElementById('authContainer');
+      if (currentUser) {
+        authContainer.innerHTML = `
+          <div class="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-2xl text-xs font-bold text-slate-700">
+            <span>👤 ${currentUser.email.split('@')[0]}</span>
+            <button onclick="logout()" class="text-rose-500 hover:underline ml-1">Çıkış</button>
+          </div>
+        `;
+      }
+    }
+
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      currentUser = session ? session.user : null;
+      checkUser();
+    });
+
+    async function logout() {
+      await supabaseClient.auth.signOut();
+      location.reload();
+    }
+
+    // PWA Kurulum
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwaInstallBanner').classList.remove('hidden');
+      const headerBtn = document.getElementById('headerInstallBtn');
+      if (headerBtn) headerBtn.classList.remove('hidden');
+    });
+
+    async function triggerInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt = null;
+        document.getElementById('pwaInstallBanner').classList.add('hidden');
+      }
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW hatası:', err));
+    }
+
+    function setMyItem(val) { document.getElementById('my-item').value = val; }
+    function setWantedItem(val) { document.getElementById('wanted-item').value = val; }
+
+    function handleFileSelect(input) {
+      if (input.files && input.files.length > 0) {
+        uploadedImagesBase64 = [];
+        const files = Array.from(input.files);
+        document.getElementById('uploadStatusText').innerHTML = '✓ Seçilen: <span class="text-emerald-600 font-extrabold">' + files.length + ' Fotoğraf Eklendi</span>';
+        
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            uploadedImagesBase64.push(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    }
+
+    // 81 İL VE TÜM İLÇELER VERİTABANI
+    const turkeyData = [
+      { name: "Adana", districts: ["Aladağ", "Ceyhan", "Çukurova", "Feke", "İmamoğlu", "Karaisalı", "Kozan", "Pozantı", "Saimbeyli", "Sarıçam", "Seyhan", "Tufanbeyli", "Yumurtalık", "Yüreğir"] },
+      { name: "Adıyaman", districts: ["Besni", "Çelikhan", "Gerger", "Gölbaşı", "Kahta", "Merkez", "Samsat", "Sincik", "Tut"] },
+      { name: "Afyonkarahisar", districts: ["Başmakçı", "Bayat", "Bolvadin", "Çay", "Çobanlar", "Dazkırı", "Dinar", "Emirdağ", "Evciler", "Hocalar", "İhsaniye", "İscehisar", "Kızılören", "Merkez", "Sandıklı", "Sinanpaşa", "Sultandağı", "Şuhut"] },
+      { name: "Ağrı", districts: ["Diyadin", "Doğubayazıt", "Eleşkirt", "Hamur", "Merkez", "Patnos", "Taşlıçay", "Tutak"] },
+      { name: "Aksaray", districts: ["Ağaçören", "Eskil", "Gülağaç", "Güzelyurt", "Merkez", "Ortaköy", "Sarıyahşi", "Sultanhanı"] },
+      { name: "Amasya", districts: ["Göynücek", "Gümüşhacıköy", "Hamamözü", "Merkez", "Merzifon", "Suluova", "Taşova"] },
+      { name: "Ankara", districts: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Etimesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kalecik", "Keçiören", "Kızılcahamam", "Mamak", "Nallıhan", "Polatlı", "Pursaklar", "Sincan", "Şereflikoçhisar", "Yenimahalle"] },
+      { name: "Antalya", districts: ["Akseki", "Aksu", "Alanya", "Demre", "Döşemealtı", "Elmalı", "Finike", "Gazipaşa", "Gündoğmuş", "İbradı", "Kaş", "Kemer", "Kepez", "Konyaaltı", "Korkuteli", "Kumluca", "Manavgat", "Muratpaşa", "Serik"] },
+      { name: "Ardahan", districts: ["Çıldır", "Damal", "Göle", "Hanak", "Merkez", "Posof"] },
+      { name: "Artvin", districts: ["Ardanuç", "Arhavi", "Borçka", "Hopa", "Kemalpaşa", "Merkez", "Murgul", "Şavşat", "Yusufeli"] },
+      { name: "Aydın", districts: ["Bozdoğan", "Buharkent", "Çine", "Didim", "Efeler", "Germencik", "İncirliova", "Karacasu", "Karpuzlu", "Koçarlı", "Köşk", "Kuşadası", "Kuyucak", "Nazilli", "Söke", "Sultanhisar", "Yenipazar"] },
+      { name: "Balıkesir", districts: ["Altıeylül", "Ayvalık", "Balya", "Bandırma", "Bigadiç", "Burhaniye", "Dursunbey", "Edremit", "Erdek", "Gömeç", "Gönen", "Havran", "İvrindi", "Karesi", "Kepsut", "Manyas", "Marmara", "Savaştepe", "Sındırgı", "Susurluk"] },
+      { name: "Bartın", districts: ["Amasra", "Kurucaşile", "Merkez", "Ulus"] },
+      { name: "Batman", districts: ["Beşiri", "Gercüş", "Hasankeyf", "Kozluk", "Merkez", "Sason"] },
+      { name: "Bayburt", districts: ["Aydıntepe", "Demirözü", "Merkez"] },
+      { name: "Bilecik", districts: ["Bozüyük", "Gölpazarı", "İnhisar", "Merkez", "Osmaneli", "Pazaryeri", "Söğüt", "Yenipazar"] },
+      { name: "Bingöl", districts: ["Adaklı", "Genç", "Karlıova", "Kiğı", "Merkez", "Solhan", "Yayladere", "Yedisu"] },
+      { name: "Bitlis", districts: ["Adilcevaz", "Ahlat", "Güroymak", "Hizan", "Merkez", "Mutki", "Tatvan"] },
+      { name: "Bolu", districts: ["Dörtdivan", "Gerede", "Göynük", "Kıbrıscık", "Mengen", "Merkez", "Mudurnu", "Seben", "Yeniçağa"] },
+      { name: "Burdur", districts: ["Ağlasun", "Altınyayla", "Bucak", "Çavdır", "Çeltikçi", "Gölhisar", "Karamanlı", "Kemer", "Merkez", "Tefenni", "Yeşilova"] },
+      { name: "Bursa", districts: ["Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Nilüfer", "Orhaneli", "Orhangazi", "Osmangazi", "Yenişehir", "Yıldırım"] },
+      { name: "Çanakkale", districts: ["Ayvacık", "Bayramiç", "Biga", "Bozcaada", "Çan", "Eceabat", "Ezine", "Gelibolu", "Gökçeada", "Lapseki", "Merkez", "Yenice"] },
+      { name: "Çankırı", districts: ["Atkaracalar", "Bayramören", "Çerkeş", "Eldivan", "Ilgaz", "Kızılırmak", "Korgun", "Kurşunlu", "Merkez", "Orta", "Şabanözü", "Yapraklı"] },
+      { name: "Çorum", districts: ["Alaca", "Bayat", "Boğazkale", "Dodurga", "İskilip", "Kargı", "Laçin", "Mecitözü", "Merkez", "Oğuzlar", "Ortaköy", "Osmancık", "Sungurlu", "Uğurludağ"] },
+      { name: "Denizli", districts: ["Acıpayam", "Babadağ", "Baklan", "Bekilli", "Beyağaç", "Bozkurt", "Buldan", "Çal", "Çameli", "Çardak", "Çivril", "Güney", "Honaz", "Kale", "Merkezefendi", "Pamukkale", "Sarayköy", "Serinhisar", "Tavas"] },
+      { name: "Diyarbakır", districts: ["Bağlar", "Bismil", "Çermik", "Çınar", "Çüngüş", "Dicle", "Eğil", "Ergani", "Hani", "Hazro", "Kayapınar", "Kocaköy", "Kulp", "Lice", "Silvan", "Sur", "Yenişehir"] },
+      { name: "Düzce", districts: ["Akçakoca", "Cumayeri", "Çilimli", "Gölyaka", "Gümüşova", "Kaynaşlı", "Merkez", "Yığılca"] },
+      { name: "Edirne", districts: ["Enez", "Havsa", "İpsala", "Keşan", "Lalapaşa", "Meriç", "Merkez", "Süloğlu", "Uzunköprü"] },
+      { name: "Elazığ", districts: ["Ağın", "Alacakaya", "Arıcak", "Baskil", "Karakoçan", "Keban", "Kovancılar", "Maden", "Merkez", "Palu", "Sivrice"] },
+      { name: "Erzincan", districts: ["Çayırlı", "İliç", "Kemah", "Kemaliye", "Merkez", "Otlukbeli", "Refahiye", "Tercan", "Üzümlü"] },
+      { name: "Erzurum", districts: ["Aşkale", "Aziziye", "Çat", "Hınıs", "Horasan", "İspir", "Karaçoban", "Karayazı", "Köprüköy", "Olur", "Oltu", "Palandöken", "Pasinler", "Pazaryolu", "Şenkaya", "Tekman", "Tortum", "Uzundere", "Yakutiye"] },
+      { name: "Eskişehir", districts: ["Alpu", "Beylikova", "Çifteler", "Günyüzü", "Han", "İnönü", "Mahmudiye", "Mihalgazi", "Mihalıççık", "Odunpazarı", "Sarıcakaya", "Seyitgazi", "Sivrihisar", "Tepebaşı"] },
+      { name: "Gaziantep", districts: ["Araban", "İslahiye", "Karkamış", "Nizip", "Oğuzeli", "Nurdağı", "Şahinbey", "Şehitkamil", "Yavuzeli"] },
+      { name: "Giresun", districts: ["Alucra", "Bulancak", "Çamoluk", "Çanakçı", "Dereli", "Doğankent", "Espiye", "Eynesil", "Görele", "Güce", "Keşap", "Merkez", "Piraziz", "Şebinkarahisar", "Tirebolu", "Yağlıdere"] },
+      { name: "Gümüşhane", districts: ["Kelkit", "Köse", "Kürtün", "Merkez", "Şiran", "Torul"] },
+      { name: "Hakkari", districts: ["Çukurca", "Derecik", "Yüksekova", "Merkez", "Şemdinli"] },
+      { name: "Hatay", districts: ["Altınözü", "Antakya", "Arsuz", "Belen", "Defne", "Dörtyol", "Erzin", "Hassa", "İskenderun", "Kırıkhan", "Kumlu", "Payas", "Reyhanlı", "Samandağ", "Yayladağı"] },
+      { name: "Iğdır", districts: ["Aralık", "Karakoyunlu", "Merkez", "Tuzluca"] },
+      { name: "Isparta", districts: ["Aksu", "Atabey", "Eğirdir", "Gelendost", "Gönen", "Keçiborlu", "Merkez", "Senirkent", "Sütçüler", "Şarkikaraağaç", "Uluborlu", "Yalvaç", "Yenişarbademli"] },
+      { name: "İstanbul", districts: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"] },
+      { name: "İzmir", districts: ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeşme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"] },
+      { name: "Kahramanmaraş", districts: ["Afşin", "Andırın", "Çağlayancerit", "Dulkadiroğlu", "Ekinözü", "Elbistan", "Göksun", "Nurhak", "Onikişubat", "Pazarcık", "Türkoğlu"] },
+      { name: "Karabük", districts: ["Eflani", "Eskipazar", "Merkez", "Ovacık", "Safranbolu", "Yenice"] },
+      { name: "Karaman", districts: ["Ayrancı", "Başyayla", "Ermenek", "Kazımkarabekir", "Merkez", "Sarıveliler"] },
+      { name: "Kars", districts: ["Akyaka", "Arpaçay", "Digor", "Kağızman", "Merkez", "Sarıkamış", "Selim", "Susuz"] },
+      { name: "Kastamonu", districts: ["Abana", "Ağlı", "Araç", "Azdavay", "Bozkurt", "Cide", "Çatalzeytin", "Daday", "Devrekani", "Doğanyurt", "Hanönü", "İhsangazi", "İnebolu", "Küre", "Merkez", "Pınarbaşı", "Seydiler", "Şenpazar", "Taşköprü", "Tosya"] },
+      { name: "Kayseri", districts: ["Akkışla", "Bünyan", "Develi", "Felahiye", "Hacılar", "İncesu", "Kocasinan", "Melikgazi", "Özvatan", "Pınarbaşı", "Sarıoğlan", "Sarız", "Talas", "Tomarza", "Yahyalı", "Yeşilhisar"] },
+      { name: "Kırıkkale", districts: ["Bahşılı", "Balışeyh", "Çelebi", "Delice", "Karakeçili", "Keskin", "Merkez", "Sulakyurt", "Yahşihan"] },
+      { name: "Kırklareli", districts: ["Babaeski", "Demirköy", "Kofçaz", "Lüleburgaz", "Merkez", "Pehlivanköy", "Pınarhisar", "Vize"] },
+      { name: "Kırşehir", districts: ["Akçakent", "Akpınar", "Boztepe", "Çiçekdağı", "Kaman", "Merkez", "Mucur"] },
+      { name: "Kilis", districts: ["Elbeyli", "Merkez", "Musabeyli", "Polateli"] },
+      { name: "Kocaeli", districts: ["Başiskele", "Çayırova", "Darıca", "Derince", "Dilovası", "Gebze", "Gölcük", "İzmit", "Kandıra", "Karamürsel", "Kartepe", "Körfez"] },
+      { name: "Konya", districts: ["Ahırlı", "Akören", "Akşehir", "Altınekin", "Beyşehir", "Bozkır", "Cihanbeyli", "Çeltik", "Çumra", "Derbent", "Derebucak", "Doğanhisar", "Emirgazi", "Ereğli", "Güneysınır", "Hadim", "Halkapınar", "Hüyük", "Ilgın", "Kadınhanı", "Karapınar", "Karatay", "Kulu", "Meram", "Sarayönü", "Selçuklu", "Seydişehir", "Taşkent", "Tuzlukçu", "Yalıhüyük", "Yunak"] },
+      { name: "Kütahya", districts: ["Altıntaş", "Aslanapa", "Çavdarhisar", "Domaniç", "Dumlupınar", "Emet", "Gediz", "Hisarcık", "Merkez", "Pazarlar", "Şaphane", "Simav", "Tavşanlı"] },
+      { name: "Malatya", districts: ["Akçadağ", "Arapgir", "Arguvan", "Battalgazi", "Darende", "Doğanşehir", "Doğanyol", "Hekimhan", "Kale", "Kuluncak", "Pütürge", "Yazıhan", "Yeşilyurt"] },
+      { name: "Manisa", districts: ["Ahmetli", "Akhisar", "Alaşehir", "Demirci", "Gölmarmara", "Gördes", "Kırkağaç", "Köprübaşı", "Kula", "Salihli", "Sarıgöl", "Saruhanlı", "Selendi", "Soma", "Şehzadeler", "Turgutlu", "Yunusemre"] },
+      { name: "Mardin", districts: ["Artuklu", "Dargeçit", "Derik", "Kızıltepe", "Mazıdağı", "Midyat", "Nusaybin", "Ömerli", "Savur", "Yeşilli"] },
+      { name: "Mersin", districts: ["Akdeniz", "Anamur", "Aydıncık", "Bozyazı", "Çamlıyayla", "Erdemli", "Gülnar", "Mezitli", "Mut", "Silifke", "Tarsus", "Toroslar", "Yenişehir"] },
+      { name: "Muğla", districts: ["Bodrum", "Dalaman", "Datça", "Fethiye", "Kavaklıdere", "Köyceğiz", "Marmaris", "Menteşe", "Milas", "Ortaca", "Seydikemer", "Ula", "Yatağan"] },
+      { name: "Muş", districts: ["Bulanık", "Hasköy", "Korkut", "Malazgirt", "Merkez", "Varto"] },
+      { name: "Nevşehir", districts: ["Acıgöl", "Avanos", "Derinkuyu", "Gülşehir", "Hacıbektaş", "Kozaklı", "Merkez", "Ürgüp"] },
+      { name: "Niğde", districts: ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"] },
+      { name: "Ordu", districts: ["Akkuş", "Altınordu", "Aybastı", "Çamaş", "Çatalpınar", "Çaybaşı", "Fatsa", "Gölköy", "Gülyalı", "Gürgentepe", "İkizce", "Kabadüz", "Kabataş", "Korgan", "Kumru", "Mesudiye", "Ünye", "Ulubey"] },
+      { name: "Osmaniye", districts: ["Bahçe", "Düziçi", "Hasanbeyli", "Kadirli", "Merkez", "Sumbas", "Toprakkale"] },
+      { name: "Rize", districts: ["Ardeşen", "Çamlıhemşin", "Çayeli", "Derepazarı", "Fındıklı", "Güneysu", "Hemşin", "İkizdere", "İyidere", "Kalkandere", "Merkez", "Pazar"] },
+      { name: "Sakarya", districts: ["Akyazı", "Arifiye", "Erenler", "Ferizli", "Geyve", "Hendek", "Karapürçek", "Karasu", "Kaynarca", "Kocaeli", "Pamukova", "Sapanca", "Serdivan", "Söğütlü", "Taraklı"] },
+      { name: "Samsun", districts: ["19 Mayıs", "Alaçam", "Asarcık", "Atakum", "Bafra", "Canik", "Çarşamba", "Havza", "İlkadım", "Kavak", "Ladik", "Salıpazarı", "Tekkeköy", "Terme", "Vezirköprü", "Yakakent"] },
+      { name: "Siirt", districts: ["Baykan", "Eruh", "Kurtalan", "Merkez", "Pervari", "Şirvan", "Tillo"] },
+      { name: "Sinop", districts: ["Boyabat", "Dikmen", "Durağan", "Erfelek", "Gerze", "Merkez", "Saraydüzü", "Türkeli"] },
+      { name: "Sivas", districts: ["Akıncılar", "Altınyayla", "Divriği", "Doğanşar", "Gemerek", "Gölova", "Gürün", "Hafik", "İmranlı", "Kangal", "Koyulhisar", "Merkez", "Suşehri", "Şarkışla", "Ulaş", "Yıldızeli", "Zara"] },
+      { name: "Şanlıurfa", districts: ["Akçakale", "Birecik", "Bozova", "Ceylanpınar", "Eyyübiye", "Halfeti", "Haliliye", "Harran", "Hilvan", "Karaköprü", "Siverek", "Suruç", "Viranşehir"] },
+      { name: "Şırnak", districts: ["Beytüşşebap", "Cizre", "Güçlükonak", "İdil", "Silopi", "Merkez", "Uludere"] },
+      { name: "Tekirdağ", districts: ["Çerkezköy", "Çorlu", "Ergene", "Hayrabolu", "Kapaklı", "Malkara", "Marmaraereğlisi", "Muratlı", "Saray", "Süleymanpaşa", "Şarköy"] },
+      { name: "Tokat", districts: ["Almus", "Artova", "Başçiftlik", "Erbaa", "Merkez", "Niksar", "Pazar", "Reşadiye", "Sulusaray", "Turhal", "Yeşilyurt", "Zile"] },
+      { name: "Trabzon", districts: ["Akçaabat", "Araklı", "Arsin", "Beşikdüzü", "Çarşıbaşı", "Çaykara", "Dernekpazarı", "Düzköy", "Hayrat", "Köprübaşı", "Maçka", "Of", "Ortahisar", "Sürmene", "Şalpazarı", "Tonya", "Vakfıkebir", "Yomra"] },
+      { name: "Tunceli", districts: ["Çemişgezek", "Hozat", "Mazgirt", "Nazımiye", "Ovacık", "Pertek", "Pülümür", "Merkez"] },
+      { name: "Uşak", districts: ["Banaz", "Eşme", "Karahallı", "Merkez", "Sivaslı", "Ulubey"] },
+      { name: "Van", districts: ["Bahçesaray", "Başkale", "Çaldıran", "Çatak", "Edremit", "Erciş", "Gevaş", "Gürpınar", "İpekyolu", "Muradiye", "Özalp", "Saray", "Tuşba"] },
+      { name: "Yalova", districts: ["Altınova", "Armutlu", "Çınarcık", "Çiftlikköy", "Merkez", "Termal"] },
+      { name: "Yozgat", districts: ["Akdağmadeni", "Aydıncık", "Boğazlıyan", "Çandır", "Çayıralan", "Çekerek", "Kadışehri", "Merkez", "Saraykent", "Sarıkaya", "Sorgun", "Şefaatli", "Yenifakılı", "Yerköy"] },
+      { name: "Zonguldak", districts: ["Alaplı", "Çaycuma", "Devrek", "Ereğli", "Gökçebey", "Kilimli", "Kozlu", "Merkez"] }
+    ];
+
+    function populateCities() {
+      const citySelect = document.getElementById('citySelect');
+      citySelect.innerHTML = '<option value="">İl Seçiniz</option>';
+      turkeyData.sort((a, b) => a.name.localeCompare(b.name, 'tr')).forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.name;
+        opt.textContent = p.name;
+        citySelect.appendChild(opt);
+      });
+    }
+
+    function loadDistricts() {
+      const city = document.getElementById('citySelect').value;
+      const districtSelect = document.getElementById('districtSelect');
+      districtSelect.innerHTML = '<option value="">İlçe Seçiniz</option>';
+      if (!city) { districtSelect.disabled = true; return; }
+      const prov = turkeyData.find(p => p.name === city);
+      if (prov) {
+        prov.districts.sort((a, b) => a.localeCompare(b, 'tr')).forEach(d => {
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = d;
+          districtSelect.appendChild(opt);
+        });
+        districtSelect.disabled = false;
+      }
+    }
+
+    // İLANLARI SUPABASE'DEN ÇEKME
+    async function renderListings() {
+      const container = document.getElementById('listingsGrid');
+      container.innerHTML = '<p class="text-xs text-slate-400 col-span-full text-center py-6">İlanlar yükleniyor...</p>';
+
+      const { data: listings, error } = await supabaseClient
+        .from('listings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-6">İlanlar yüklenirken hata oluştu.</p>';
+        return;
+      }
+
+      if (!listings || listings.length === 0) {
+        container.innerHTML = '<p class="text-xs text-slate-500 col-span-full text-center py-6">Henüz ilan eklenmemiş. İlk ilanı sen ekle!</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      listings.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="relative aspect-square overflow-hidden bg-slate-100">
+              <img src="${item.image_url || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f'}" class="w-full h-full object-cover">
+              <span class="absolute bottom-3 left-3 bg-slate-900/80 text-white text-[11px] font-bold px-2.5 py-1 rounded-lg">${item.location}</span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-extrabold text-slate-900 text-base line-clamp-1">${item.title}</h3>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">${item.description}</p>
+              <div class="mt-4 p-3 bg-brand-50 rounded-2xl border border-brand-100">
+                <span class="block text-[10px] font-extrabold text-brand-700 uppercase">Aradığı Takas:</span>
+                <p class="text-xs font-bold text-slate-800">${item.wanted}</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 pt-0">
+            <button onclick="alert('İlan sahibiyle iletişim yakında aktif olacak!')" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-3 rounded-xl transition-all">
+              İncele & Teklif Et
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // İLAN EKLEME
+    async function handleCreateListing(event) {
+      event.preventDefault();
+
+      if (!currentUser) {
+        alert('⚠️ İlan verebilmek için lütfen önce giriş yapın!');
+        openLoginModal();
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Yayınlanıyor, Lütfen Bekleyin...";
+
+      const title = document.getElementById('my-item').value;
+      const wanted = document.getElementById('wanted-item').value;
+      const descriptionText = document.getElementById('item-desc').value || "Açıklama yok.";
+      const phone = document.getElementById('item-phone').value;
+      const city = document.getElementById('citySelect').value;
+      const district = document.getElementById('districtSelect').value;
+
+      const fullDescription = `${descriptionText} | Tel: ${phone}`;
+      const mainImage = uploadedImagesBase64[0] || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f';
+
+      const { data, error } = await supabaseClient
+        .from('listings')
+        .insert([{
+          title,
+          wanted,
+          description: fullDescription,
+          location: district + ', ' + city,
+          image_url: mainImage,
+          user_email: currentUser.email
+        }]);
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = "İlanı Canlıya Yayınla";
+
+      if (error) {
+        alert('İlan eklenirken hata oluştu: ' + error.message);
+      } else {
+        alert('🎉 İlanınız başarıyla ortak vitrinde yayınlandı!');
+        document.getElementById('createListingForm').reset();
+        uploadedImagesBase64 = ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80"];
+        document.getElementById('uploadStatusText').innerText = "Fotoğraf Seçmek İçin Dokunun";
+        showPage('home');
+        renderListings();
+      }
+    }
+
+    function showPage(pageId) {
+      if (pageId === 'create' && !currentUser) {
+        alert('⚠️ İlan verebilmek için önce giriş yapmalısınız!');
+        openLoginModal();
+        return;
+      }
+      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('page-' + pageId).classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    window.onload = function() {
+      populateCities();
+      checkUser();
+      renderListings();
+    };
+  </script>
+</body>
+</html>
+
