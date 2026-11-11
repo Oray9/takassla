@@ -209,47 +209,51 @@
             <div class="mb-5 relative z-10">
               <span class="bg-brand-500/20 border border-brand-500/30 text-brand-300 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider inline-block mb-2">Kültür & Hikayeler</span>
               <h3 class="text-lg font-extrabold tracking-tight">Atmaya Kıyamadıklarımız</h3>
+              <p class="text-[11px] text-slate-300 mt-1">Okumak için kartlara dokunabilirsin.</p>
             </div>
 
             <div class="space-y-4 relative z-10">
               
-              <!-- Kart 1 -->
-              <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-all">
+              <!-- Kart 1 (Tıklanabilir) -->
+              <div onclick="openStoryModal(1)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
-                  <div class="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                  <div class="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-heart-pulse"></i>
                   </div>
                   <h4 class="text-xs font-extrabold text-white">Neden Bağ Kurarız?</h4>
                 </div>
-                <p class="text-[11px] text-slate-300 leading-relaxed">
+                <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-2">
                   Eşyalarımız anılarımızın hatırasıdır. Onları tavan arasında çürütmek yerine yeni birine devretmek nostaljiyi ölümsüzleştirir.
                 </p>
+                <span class="text-[10px] text-brand-300 font-bold mt-2 inline-block">Devamını Oku →</span>
               </div>
 
-              <!-- Kart 2 -->
-              <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-all">
+              <!-- Kart 2 (Tıklanabilir) -->
+              <div onclick="openStoryModal(2)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
-                  <div class="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                  <div class="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-earth-americas"></i>
                   </div>
                   <h4 class="text-xs font-extrabold text-white">Döngüsel Ekonomi</h4>
                 </div>
-                <p class="text-[11px] text-slate-300 leading-relaxed">
+                <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-2">
                   Kullanılmayan eşyayı takas etmek, sıfır atık hareketine ve dünyamızın geleceğine yapılan en doğrudan katkıdır.
                 </p>
+                <span class="text-[10px] text-emerald-300 font-bold mt-2 inline-block">Devamını Oku →</span>
               </div>
 
-              <!-- Kart 3 -->
-              <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-all">
+              <!-- Kart 3 (Tıklanabilir) -->
+              <div onclick="openStoryModal(3)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
-                  <div class="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                  <div class="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-feather"></i>
                   </div>
                   <h4 class="text-xs font-extrabold text-white">Minimalizm & Arınma</h4>
                 </div>
-                <p class="text-[11px] text-slate-300 leading-relaxed">
+                <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-2">
                   Evin köşesini dolduran kalabalıklar zihinsel yorgunluk yaratır. Her takas evinize ve zihninize nefes aldırır.
                 </p>
+                <span class="text-[10px] text-amber-300 font-bold mt-2 inline-block">Devamını Oku →</span>
               </div>
 
             </div>
@@ -421,6 +425,24 @@
     </div>
   </div>
 
+  <!-- HİKAYE DETAY MODALI (YENİ EKLENDİ) -->
+  <div id="storyModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative space-y-4">
+      <button onclick="closeStoryModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 font-bold">✕</button>
+      
+      <div class="flex items-center gap-3">
+        <div id="storyModalIcon" class="w-10 h-10 rounded-2xl bg-brand-500 flex items-center justify-center text-white text-base"></div>
+        <h3 id="storyModalTitle" class="text-lg font-extrabold text-slate-900">Hikaye Başlığı</h3>
+      </div>
+      
+      <p id="storyModalText" class="text-sm text-slate-600 leading-relaxed pt-2"></p>
+      
+      <div class="pt-4 border-t border-slate-100 text-center">
+        <button onclick="closeStoryModal()" class="w-full bg-slate-900 text-white font-bold text-xs py-3 rounded-xl">Kapat</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // SUPABASE BAĞLANTI BİLGİLERİN
     const SUPABASE_URL = 'https://rogexfbxwvpmzptwhjcr.supabase.co';
@@ -428,6 +450,38 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let activeListingForOffer = null;
+
+    // HİKAYE VERİLERİ
+    const storyData = {
+      1: {
+        title: "Neden Eşyalarımızla Bağ Kurarız?",
+        icon: '<i class="fa-solid fa-heart-pulse"></i>',
+        text: "Psikolojiye göre eşyalarımız sadece birer nesne değildir; anılarımızın, gençliğimizin veya sevdiklerimizin birer hatırasıdır. Onları tavan arasında veya dolap köşelerinde çürütmek yerine, yeni bir hikaye yazması için başka birine devretmek o nostaljiyi öldürmez, aksine ölümsüzleştirir. Takas etmek, hatıraları başkalarıyla paylaşmanın en güzel yoludur."
+      },
+      2: {
+        title: "Döngüsel Ekonomi ve Doğaya Borcumiz",
+        icon: '<i class="fa-solid fa-earth-americas"></i>',
+        text: "\"Kullan-at\" kültürü her yıl milyonlarca ton atığı doğaya bırakıyor ve karbon ayak izimizi büyütüyor. Evde duran ve artık kullanmadığınız bir eşyayı takas etmek, sıfır atık hareketine ve dünyamızın geleceğine yapılan en doğrudan bireysel katkıdır. Yeni bir şey üretilmesine gerek kalmadan mevcut eşyalar döngüde tutulur."
+      },
+      3: {
+        title: "Minimalizm ve Fazlalıklardan Arınma",
+        icon: '<i class="fa-solid fa-feather"></i>',
+        text: "Japonların \"Tansu\" felsefesinde olduğu gibi, evin her köşesini dolduran kullanılmayan eşyalar zamanla zihinsel bir kalabalık ve yorgunluk yaratır. Değerlendirmek istediğiniz her eşyayı takas etmek, evinizde fiziksel alana ve zihninizde huzura yer açmanızı sağlar."
+      }
+    };
+
+    function openStoryModal(id) {
+      const story = storyData[id];
+      if (!story) return;
+      document.getElementById('storyModalTitle').innerText = story.title;
+      document.getElementById('storyModalIcon').innerHTML = story.icon;
+      document.getElementById('storyModalText').innerText = story.text;
+      document.getElementById('storyModal').classList.remove('hidden');
+    }
+
+    function closeStoryModal() {
+      document.getElementById('storyModal').classList.add('hidden');
+    }
 
     window.addEventListener('DOMContentLoaded', async () => {
       populateCities();
