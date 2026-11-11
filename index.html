@@ -197,6 +197,62 @@
       </div>
     </main>
 
+    <!-- KÖŞE YAZILARI: ATMAYA KIYAMADIKLARIMIZ & TAKAS KÜLTÜRÜ -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+      <div class="bg-gradient-to-r from-slate-900 to-brand-dark rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="text-center max-w-2xl mx-auto mb-10 relative z-10">
+          <span class="bg-brand-500/20 border border-brand-500/30 text-brand-300 text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-3">Kültür & Hikayeler</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">Atmaya Kıyamadıklarımız</h2>
+          <p class="text-slate-300 text-xs sm:text-sm mt-2">Eşyalarımızla kurduğumuz bağlar, doğaya borcumuz ve döngüsel yaşam felsefesi üzerine.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+          
+          <!-- Kart 1 -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col justify-between hover:bg-white/15 transition-all">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold mb-4">
+                <i class="fa-solid fa-heart-pulse"></i>
+              </div>
+              <h3 class="text-base font-extrabold text-white mb-2">Neden Eşyalarımızla Bağ Kurarız?</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Psikolojiye göre eşyalarımız sadece birer nesne değildir; anılarımızın, gençliğimizin veya sevdiklerimizin birer hatırasıdır. Onları tavan arasında çürütmek yerine, yeni bir hikaye yazması için başka birine devretmek o nostaljiyi öldürmez, aksine ölümsüzleştirir.
+              </p>
+            </div>
+          </div>
+
+          <!-- Kart 2 -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col justify-between hover:bg-white/15 transition-all">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold mb-4">
+                <i class="fa-solid fa-earth-americas"></i>
+              </div>
+              <h3 class="text-base font-extrabold text-white mb-2">Döngüsel Ekonomi ve Doğaya Borcumuz</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                "Kullan-at" kültürü her yıl milyonlarca ton atığı doğaya bırakıyor. Evde duran ve kullanılmayan bir eşyayı takas etmek, sıfır atık hareketine ve dünyamızın geleceğine yapılan en doğrudan bireysel katkıdır.
+              </p>
+            </div>
+          </div>
+
+          <!-- Kart 3 -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col justify-between hover:bg-white/15 transition-all">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold mb-4">
+                <i class="fa-solid fa-feather"></i>
+              </div>
+              <h3 class="text-base font-extrabold text-white mb-2">Minimalizm ve Fazlalıklardan Arınma</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Japonların "Tansu" felsefesinde olduğu gibi, evin her köşesini dolduran kullanılmayan eşyalar zihinsel bir kalabalık yaratır. Değerlendirmek istediğiniz her takas, zihninize ve yaşam alanınıza nefes aldırır.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 mt-20 border-t border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-xs">
@@ -367,12 +423,10 @@
 
     let activeListingForOffer = null;
 
-    // SAYFA YÜKLENDİĞİNDE OTURUM KONTROLÜ
     window.addEventListener('DOMContentLoaded', async () => {
       populateCities();
       renderListings();
 
-      // Mevcut oturumu kontrol et
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session && session.user) {
         const userName = session.user.user_metadata?.display_name || session.user.email.split('@')[0];
@@ -485,7 +539,6 @@
     function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
     function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
 
-    // KAYIT OL (KULLANICI ADI İLE)
     async function handleSignUp() {
       const name = document.getElementById('authName').value;
       const email = document.getElementById('authEmail').value;
@@ -496,9 +549,7 @@
       const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password,
-        options: {
-          data: { display_name: name }
-        }
+        options: { data: { display_name: name } }
       });
 
       if (error) { 
@@ -510,7 +561,6 @@
       }
     }
 
-    // GİRİŞ YAP
     async function handleLogin() {
       const email = document.getElementById('authEmail').value;
       const password = document.getElementById('authPassword').value;
