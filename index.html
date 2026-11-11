@@ -136,8 +136,6 @@
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        
-        <!-- Kategori 1: Otomobil -->
         <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -147,7 +145,6 @@
           </div>
         </div>
 
-        <!-- Kategori 2: Elektronik -->
         <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -157,7 +154,6 @@
           </div>
         </div>
 
-        <!-- Kategori 3: Kamp & Outdoor -->
         <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -167,7 +163,6 @@
           </div>
         </div>
 
-        <!-- Kategori 4: Bisiklet & Spor -->
         <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -177,7 +172,6 @@
           </div>
         </div>
 
-        <!-- Kategori 5: Askıda Takas (Ücretsiz) -->
         <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4 col-span-2 sm:col-span-1">
           <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -186,7 +180,6 @@
             <span class="text-[10px] text-rose-300 font-bold">Öğrenciye Ücretsiz</span>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -313,11 +306,62 @@
     </div>
   </div>
 
+  <!-- DETAY & TEKLİF VERME MODAL (PENCERESİ) -->
+  <div id="detailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeDetailModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 font-bold">✕</button>
+      
+      <div class="flex flex-col sm:flex-row gap-6">
+        <div class="sm:w-1/2 aspect-square rounded-2xl overflow-hidden bg-slate-100 shadow-inner">
+          <img id="modalImg" src="" class="w-full h-full object-cover">
+        </div>
+        <div class="sm:w-1/2 flex flex-col justify-between space-y-4">
+          <div>
+            <span id="modalLocation" class="bg-brand-50 text-brand-700 text-xs font-extrabold px-3 py-1 rounded-full border border-brand-200 inline-block mb-2">Konum</span>
+            <h2 id="modalTitle" class="text-xl font-extrabold text-slate-900">İlan Başlığı</h2>
+            <p id="modalDesc" class="text-xs text-slate-600 mt-2 leading-relaxed">Açıklama metni buraya gelecektir.</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+            <span class="block text-[10px] font-extrabold text-slate-400 uppercase">Sahibinin Aradığı Ürün:</span>
+            <p id="modalWanted" class="text-xs font-bold text-slate-800 mt-0.5">İstenen ürün</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-slate-100">
+
+      <!-- TAKAS TEKLİFİ GÖNDERME FORMU -->
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">Bu İlana Karşılık Ne Teklif Ediyorsun?</h3>
+          <p class="text-xs text-slate-500">Karşı tarafa iletmek istediğin teklifini ve mesajını yaz.</p>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1">Teklif Ettiğin Ürün / Eşya</label>
+          <input type="text" id="offerItemInput" placeholder="Örn: 2020 Model Elektrikli Scooter veya iPhone 12" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1">Takas Mesajın / Notun</label>
+          <textarea id="offerMsgInput" rows="2" placeholder="Merhaba, ürünüm çok temiz, takas düşünür müsün?" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium resize-none"></textarea>
+        </div>
+
+        <button onclick="submitTradeOffer()" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Takas Teklifini İlan Sahibine Gönder</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // SUPABASE BAĞLANTI BİLGİLERİN
     const SUPABASE_URL = 'https://rogexfbxwvpmzptwhjcr.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_fSPfiOhN9Rb3F4AimP5Muw_shTFMKcG';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let activeListingForOffer = null;
 
     // TÜRKİYE'NİN TAM 81 İLİ VE İLÇELERİ
     const turkeyData = [
@@ -486,6 +530,7 @@
     function handleCreateListing(event) {
       event.preventDefault();
       const newItem = {
+        id: Date.now(),
         title: document.getElementById('my-item').value,
         wanted: document.getElementById('wanted-item').value,
         desc: document.getElementById('item-desc').value || "Açıklama yok.",
@@ -504,11 +549,60 @@
       showPage('home');
     }
 
+    // İLAN DETAY MODALINI AÇ
+    function openDetailModal(listingId) {
+      const saved = JSON.parse(localStorage.getItem('takassla_listings') || '[]');
+      const item = saved.find(l => l.id === listingId);
+      if (!item) return;
+
+      activeListingForOffer = item;
+
+      document.getElementById('modalImg').src = item.image;
+      document.getElementById('modalTitle').innerText = item.title;
+      document.getElementById('modalDesc').innerText = item.desc;
+      document.getElementById('modalLocation').innerText = '📍 ' + item.location;
+      document.getElementById('modalWanted').innerText = item.wanted;
+
+      document.getElementById('offerItemInput').value = '';
+      document.getElementById('offerMsgInput').value = '';
+
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // TEKLİFİ GÖNDER
+    function submitTradeOffer() {
+      const offerItem = document.getElementById('offerItemInput').value;
+      const offerMsg = document.getElementById('offerMsgInput').value;
+
+      if (!offerItem) {
+        alert('Lütfen karşılığında teklif edeceğiniz ürünü yazınız.');
+        return;
+      }
+
+      alert('🚀 Tebrikler! "' + activeListingForOffer.title + '" ilan sahibine teklifiniz başarıyla iletildi. İlan sahibi sizinle iletişime geçecektir.');
+      closeDetailModal();
+    }
+
     function renderListings() {
       const container = document.getElementById('listingsGrid');
       container.innerHTML = '';
       const saved = JSON.parse(localStorage.getItem('takassla_listings') || '[]');
       
+      // Örnek varsayılan ilanlar (ilk açılışta boş kalmasın diye)
+      if (saved.length === 0) {
+        const defaultItems = [
+          { id: 1, title: '2016 Model Honda Civic', wanted: 'SUV Araç veya Arsa', desc: 'Aracım hatasız, boyasız temiz kullanıldı.', location: 'Seyhan, Adana', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80' },
+          { id: 2, title: 'iPhone 13 Pro 128GB', wanted: 'PlayStation 5 + Ek Üstü', desc: 'Pil sağlığı %88, kutulu faturalı.', location: 'Çankaya, Ankara', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80' },
+          { id: 3, title: '4 Kişilik Otomatik Kamp Çadırı', wanted: 'Kamp Ocağı ve Mat', desc: 'Sadece 1 kez kullanıldı, sıfır ayarında.', location: 'Bodrum, Muğla', image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80' }
+        ];
+        localStorage.setItem('takassla_listings', JSON.stringify(defaultItems));
+        saved.push(...defaultItems);
+      }
+
       saved.forEach(item => {
         container.innerHTML += `
           <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between">
@@ -527,7 +621,9 @@
               </div>
             </div>
             <div class="p-4 pt-0">
-              <button onclick="alert('Teklifiniz iletildi!')" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-3 rounded-xl transition-all">İncele & Teklif Et</button>
+              <button onclick="openDetailModal(${item.id})" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-eye"></i> İncele & Teklif Et
+              </button>
             </div>
           </div>`;
       });
