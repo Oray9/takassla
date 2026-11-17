@@ -56,12 +56,12 @@
           <div class="w-full flex items-center bg-white border border-slate-300 rounded-full shadow-md hover:shadow-lg transition-shadow p-1.5 focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
             <div class="flex-1 px-4 border-r border-slate-200">
               <label class="block text-[10px] uppercase tracking-wider font-extrabold text-slate-400">Sende Ne Var?</label>
-              <input type="text" placeholder="Örn: iPhone 11, Çadır, Araba..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
+              <input type="text" placeholder="Örn: iPhone 11, Kitap, Oyuncak..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
             </div>
             <div class="text-slate-300 px-1"><i class="fa-solid fa-arrows-rotate text-xs"></i></div>
             <div class="flex-1 px-4">
               <label class="block text-[10px] uppercase tracking-wider font-extrabold text-brand-600">Ne İstiyorsun?</label>
-              <input type="text" placeholder="Örn: PS5, Araç, Arsa..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
+              <input type="text" placeholder="Örn: PS5, Çocuk Arabası..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
             </div>
             <button class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95">
               <i class="fa-solid fa-magnifying-glass text-sm"></i>
@@ -104,7 +104,7 @@
             Eşyalarını Nakde Değil, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-amber-300">Hayallerine</span> Dönüştür!
           </h1>
           <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Evinizde duran eşyaları, otomobilleri veya gayrimenkulleri yükleyin; aradığınız binlerce ürünle doğrudan takas edin.
+            Kitaplardan oyuncaklara, elektronik eşyalardan araçlara kadar binlerce ürünü doğrudan takas edin.
           </p>
         </div>
 
@@ -116,7 +116,7 @@
             Kullanmadığın Eşyalar <span class="text-rose-400">Öğrencilere</span> Umut Olsun!
           </h1>
           <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Kullanmadığınız ders kitaplarını, masa lambanızı veya ev eşyalarınızı öğrenciler için "Askıda Takas" ile ücretsiz paylaşın.
+            Okuduğunuz ders kitaplarını, çocukların büyüme çağında artan oyuncaklarını öğrenciler ve aileler için ücretsiz paylaşın.
           </p>
         </div>
 
@@ -127,7 +127,7 @@
       </div>
     </section>
 
-    <!-- FOTOĞRAFLI POPÜLER KATEGORİLER -->
+    <!-- FOTOĞRAFLI POPÜLER KATEGORİLER (YENİLENMİŞ) -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
@@ -135,51 +135,68 @@
         </h2>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
-          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        
+        <!-- Kategori 1: Kitap & Eğitim -->
+        <div onclick="filterByCategory('Kitap')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
+          <img src="https://images.unsplash.com/photo-1495640388908-05fa85288e61?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
           <div class="relative z-10">
-            <span class="text-white font-extrabold text-sm block">Otomobil & Araçlar</span>
-            <span class="text-[10px] text-brand-300 font-bold">1,200+ İlan</span>
+            <span class="text-white font-extrabold text-xs block">📚 Kitap & Sınav</span>
+            <span class="text-[10px] text-brand-300 font-bold">Roman & Ders</span>
           </div>
         </div>
 
-        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
+        <!-- Kategori 2: Oyuncak & Bebek -->
+        <div onclick="filterByCategory('Oyuncak')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
+          <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
+          <div class="relative z-10">
+            <span class="text-white font-extrabold text-xs block">🧸 Oyuncak & Bebek</span>
+            <span class="text-[10px] text-brand-300 font-bold">Çocuk & Puset</span>
+          </div>
+        </div>
+
+        <!-- Kategori 3: Elektronik -->
+        <div onclick="filterByCategory('Elektronik')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
           <div class="relative z-10">
-            <span class="text-white font-extrabold text-sm block">Elektronik & Oyun</span>
-            <span class="text-[10px] text-brand-300 font-bold">3,400+ İlan</span>
+            <span class="text-white font-extrabold text-xs block">📱 Elektronik</span>
+            <span class="text-[10px] text-brand-300 font-bold">Telefon & Konsol</span>
           </div>
         </div>
 
-        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
+        <!-- Kategori 4: Otomobil -->
+        <div onclick="filterByCategory('Otomobil')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
+          <div class="relative z-10">
+            <span class="text-white font-extrabold text-xs block">🚗 Otomobil</span>
+            <span class="text-[10px] text-brand-300 font-bold">Araç & Yedek Parça</span>
+          </div>
+        </div>
+
+        <!-- Kategori 5: Kamp & Outdoor -->
+        <div onclick="filterByCategory('Kamp')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
           <div class="relative z-10">
-            <span class="text-white font-extrabold text-sm block">Kamp & Outdoor</span>
-            <span class="text-[10px] text-brand-300 font-bold">950+ İlan</span>
+            <span class="text-white font-extrabold text-xs block">⛺ Kamp & Spor</span>
+            <span class="text-[10px] text-brand-300 font-bold">Çadır & Bisiklet</span>
           </div>
         </div>
 
-        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
-          <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
-          <div class="relative z-10">
-            <span class="text-white font-extrabold text-sm block">Bisiklet & Spor</span>
-            <span class="text-[10px] text-brand-300 font-bold">810+ İlan</span>
-          </div>
-        </div>
-
-        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4 col-span-2 sm:col-span-1">
+        <!-- Kategori 6: Askıda Takas -->
+        <div onclick="filterByCategory('Askıda')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
           <div class="relative z-10">
-            <span class="text-white font-extrabold text-sm block">🎓 Askıda Takas</span>
+            <span class="text-white font-extrabold text-xs block">🎓 Askıda Takas</span>
             <span class="text-[10px] text-rose-300 font-bold">Öğrenciye Ücretsiz</span>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -192,8 +209,11 @@
           <div class="flex items-center justify-between mb-6">
             <div>
               <h2 class="text-xl font-extrabold text-slate-900">Vitrin İlanları</h2>
-              <p class="text-xs text-slate-500 font-medium">Sana yakın en son eklenen takas fırsatları</p>
+              <p id="filterInfoText" class="text-xs text-slate-500 font-medium">Sana yakın en son eklenen takas fırsatları</p>
             </div>
+            <button id="resetFilterBtn" onclick="resetFilter()" class="hidden text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1.5 rounded-xl border border-brand-200 hover:bg-brand-100 transition-colors">
+              ✕ Filtreyi Kaldır (Tümünü Göster)
+            </button>
           </div>
 
           <div id="listingsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -317,20 +337,20 @@
         
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Elinizdeki Ürün / Araç Ne?</label>
-          <input id="my-item" type="text" required placeholder="Örn: 2015 Model Honda Civic, iPhone 13..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input id="my-item" type="text" required placeholder="Örn: KPSS Kitap Seti, LEGO Oyuncak, iPhone 13..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
           
           <div class="flex flex-wrap gap-2 mt-2">
             <span class="text-[10px] text-slate-400 self-center font-semibold">Hızlı Seç:</span>
+            <button type="button" onclick="setMyItem('📚 YKS / KPSS / Roman Kitap Seti')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📚 Kitap</button>
+            <button type="button" onclick="setMyItem('🧸 Çocuk Oyuncak / Bebek Arabası')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">🧸 Oyuncak & Bebek</button>
+            <button type="button" onclick="setMyItem('📱 iPhone / Akıllı Telefon')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📱 Elektronik</button>
             <button type="button" onclick="setMyItem('🚗 2015 Model Honda Civic')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">🚗 Otomobil</button>
-            <button type="button" onclick="setMyItem('📱 iPhone 13 / Akıllı Telefon')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📱 Telefon/Tablet</button>
-            <button type="button" onclick="setMyItem('⛺ 4 Kişilik Kamp Çadırı')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">⛺ Kamp/Outdoor</button>
-            <button type="button" onclick="setMyItem('🚲 Dağ Bisikleti')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">🚲 Bisiklet</button>
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-extrabold text-brand-700 mb-1.5">Karşılığında Ne İstersiniz?</label>
-          <input id="wanted-item" type="text" required placeholder="Örn: SUV Araç, Arsa, Tablet..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input id="wanted-item" type="text" required placeholder="Örn: Çocuk Bisikleti, Roman, Tablet..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
           
           <div class="flex flex-wrap gap-2 mt-2">
             <span class="text-[10px] text-brand-400 self-center font-semibold">Hızlı Seç:</span>
@@ -441,7 +461,7 @@
         
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1">Teklif Ettiğin Ürün / Eşya</label>
-          <input type="text" id="offerItemInput" placeholder="Örn: 2020 Model Elektrikli Scooter veya iPhone 12" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input type="text" id="offerItemInput" placeholder="Örn: Roman Kitap Seti veya Oyuncak" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
         </div>
 
         <div>
@@ -465,6 +485,7 @@
 
     let activeListingForOffer = null;
     let cloudListings = [];
+    let currentFilterKeyword = "";
 
     // HİKAYE VERİLERİ
     const storyDatabase = {
@@ -687,7 +708,7 @@
       }
     }
 
-    // SUPABASE'DEN İLANLARI ÇEKME
+    // SUPABASE'DEN İLANLARI ÇEKME VE FİLTRELEME
     async function fetchListingsFromSupabase() {
       const { data, error } = await supabaseClient
         .from('listings')
@@ -703,7 +724,21 @@
       renderListingsUI();
     }
 
-    // SUPABASE'E YENİ İLAN EKLEME (item_desc uyumlu)
+    function filterByCategory(keyword) {
+      currentFilterKeyword = keyword.toLowerCase();
+      document.getElementById('filterInfoText').innerText = `"${keyword}" kategorisindeki ilanlar listeleniyor`;
+      document.getElementById('resetFilterBtn').classList.remove('hidden');
+      renderListingsUI();
+    }
+
+    function resetFilter() {
+      currentFilterKeyword = "";
+      document.getElementById('filterInfoText').innerText = "Sana yakın en son eklenen takas fırsatları";
+      document.getElementById('resetFilterBtn').classList.add('hidden');
+      renderListingsUI();
+    }
+
+    // SUPABASE'E YENİ İLAN EKLEME
     async function handleCreateListing(event) {
       event.preventDefault();
       
@@ -767,17 +802,26 @@
       const container = document.getElementById('listingsGrid');
       container.innerHTML = '';
       
-      if (cloudListings.length === 0) {
+      let filtered = cloudListings;
+      if (currentFilterKeyword) {
+        filtered = cloudListings.filter(item => 
+          item.title.toLowerCase().includes(currentFilterKeyword) || 
+          item.item_desc.toLowerCase().includes(currentFilterKeyword) ||
+          item.wanted.toLowerCase().includes(currentFilterKeyword)
+        );
+      }
+      
+      if (filtered.length === 0) {
         container.innerHTML = `
           <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-slate-200">
             <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-            <p class="text-sm font-bold text-slate-600">Henüz hiç ilan eklenmemiş.</p>
-            <p class="text-xs text-slate-400 mt-1">İlk ilanı sen ver, vitrini doldur!</p>
+            <p class="text-sm font-bold text-slate-600">Bu kategoride henüz ilan bulunmuyor.</p>
+            <p class="text-xs text-slate-400 mt-1">İlk ilanı sen vererek bu kategoriyi doldurabilirsin!</p>
           </div>`;
         return;
       }
 
-      cloudListings.forEach(item => {
+      filtered.forEach(item => {
         container.innerHTML += `
           <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between">
             <div>
