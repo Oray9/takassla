@@ -568,7 +568,7 @@
       { name: "Muğla", districts: ["Bodrum", "Dalaman", "Datça", "Fethiye", "Kavaklıdere", "Köyceğiz", "Marmaris", "Menteşe", "Milas", "Ortaca", "Seydikemer", "Ula", "Yatağan"] },
       { name: "Muş", districts: ["Bulanık", "Hasköy", "Korkut", "Malazgirt", "Merkez", "Varto"] },
       { name: "Nevşehir", districts: ["Acıgöl", "Avanos", "Derinkuyu", "Gülşehir", "Hacıbektaş", "Kozaklı", "Merkez", "Ürgüp"] },
-      { name: "Niğde", digests: [], districts: ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"] },
+      { name: "Niğde", districts: ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"] },
       { name: "Ordu", districts: ["Akkuş", "Altınordu", "Aybastı", "Çamaş", "Çatalpınar", "Çaybaşı", "Fatsa", "Gölköy", "Gülyalı", "Gürgentepe", "İkizce", "Kabadüz", "Kabataş", "Korgan", "Kumru", "Mesudiye", "Ünye", "Ulubey"] },
       { name: "Osmaniye", districts: ["Bahçe", "Düziçi", "Hasanbeyli", "Kadirli", "Merkez", "Sumbas", "Toprakkale"] },
       { name: "Rize", districts: ["Ardeşen", "Çamlıhemşin", "Çayeli", "Derepazarı", "Fındıklı", "Güneysu", "Hemşin", "İkizdere", "İyidere", "Kalkandere", "Merkez", "Pazar"] },
@@ -689,8 +689,6 @@
 
     // SUPABASE'DEN İLANLARI ÇEKME
     async function fetchListingsFromSupabase() {
-      const container = document.getElementById('listingsGrid');
-      
       const { data, error } = await supabaseClient
         .from('listings')
         .select('*')
@@ -705,7 +703,7 @@
       renderListingsUI();
     }
 
-    // SUPABASE'E YENİ İLAN EKLEME
+    // SUPABASE'E YENİ İLAN EKLEME (item_desc uyumlu)
     async function handleCreateListing(event) {
       event.preventDefault();
       
@@ -713,7 +711,7 @@
         id: Date.now(),
         title: document.getElementById('my-item').value,
         wanted: document.getElementById('wanted-item').value,
-        desc: document.getElementById('item-desc').value || "Açıklama yok.",
+        item_desc: document.getElementById('item-desc').value || "Açıklama yok.",
         location: document.getElementById('districtSelect').value + ', ' + document.getElementById('citySelect').value,
         image: uploadedImageBase64
       };
@@ -743,7 +741,7 @@
 
       document.getElementById('modalImg').src = item.image;
       document.getElementById('modalTitle').innerText = item.title;
-      document.getElementById('modalDesc').innerText = item.desc;
+      document.getElementById('modalDesc').innerText = item.item_desc;
       document.getElementById('modalLocation').innerText = '📍 ' + item.location;
       document.getElementById('modalWanted').innerText = item.wanted;
 
@@ -789,7 +787,7 @@
               </div>
               <div class="p-4">
                 <h3 class="font-extrabold text-slate-900 text-base line-clamp-1">${item.title}</h3>
-                <p class="text-xs text-slate-500 mt-1 line-clamp-2">${item.desc}</p>
+                <p class="text-xs text-slate-500 mt-1 line-clamp-2">${item.item_desc}</p>
                 <div class="mt-4 p-3 bg-brand-50 rounded-2xl border border-brand-100">
                   <span class="block text-[10px] font-extrabold text-brand-700 uppercase">Aradığı Takas:</span>
                   <p class="text-xs font-bold text-slate-800">${item.wanted}</p>
