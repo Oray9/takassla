@@ -98,7 +98,7 @@
         <div id="slide-1" class="banner-slide max-w-2xl relative z-10 transition-opacity duration-500">
           <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-white/15 backdrop-blur-md border border-white/20 text-brand-100 mb-4">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            Canlı Takas Piyasası
+            Canlı Takas Piyasası (Bulut Veritabanı)
           </span>
           <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white">
             Eşyalarını Nakde Değil, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-amber-300">Hayallerine</span> Dönüştür!
@@ -197,7 +197,7 @@
           </div>
 
           <div id="listingsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            <!-- İlanlar buraya dinamik eklenecek -->
+            <!-- İlanlar buluttan dinamik eklenecek -->
           </div>
         </div>
 
@@ -214,7 +214,7 @@
 
             <div class="space-y-4 relative z-10">
               
-              <!-- Kart 1 (Farklı Sayfaya Gider) -->
+              <!-- Kart 1 -->
               <div onclick="openStoryPage(1)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
                   <div class="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
@@ -228,7 +228,7 @@
                 <span class="text-[10px] text-brand-300 font-bold mt-2 inline-block">Yazıyı Oku →</span>
               </div>
 
-              <!-- Kart 2 (Farklı Sayfaya Gider) -->
+              <!-- Kart 2 -->
               <div onclick="openStoryPage(2)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
                   <div class="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
@@ -242,7 +242,7 @@
                 <span class="text-[10px] text-emerald-300 font-bold mt-2 inline-block">Yazıyı Oku →</span>
               </div>
 
-              <!-- Kart 3 (Farklı Sayfaya Gider) -->
+              <!-- Kart 3 -->
               <div onclick="openStoryPage(3)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
                   <div class="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
@@ -272,7 +272,7 @@
     </footer>
   </div>
 
-  <!-- PAGE: HİKAYE OKUMA SAYFASI (YENİ) -->
+  <!-- PAGE: HİKAYE OKUMA SAYFASI -->
   <div id="page-story" class="page-content hidden">
     <div class="max-w-3xl mx-auto px-4 py-10">
       <button onclick="showPage('home')" class="text-xs font-bold text-brand-600 mb-6 inline-flex items-center gap-2 hover:underline">
@@ -312,7 +312,7 @@
       <form id="createListingForm" onsubmit="handleCreateListing(event)" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
         <div>
           <h2 class="text-xl font-extrabold text-slate-900">30 Saniyede Ücretsiz İlan Ver</h2>
-          <p class="text-xs text-slate-500 mt-1">İlanınız anında vitrinde yayınlanacaktır.</p>
+          <p class="text-xs text-slate-500 mt-1">İlanınız anında bulut vitrininde yayınlanacaktır.</p>
         </div>
         
         <div>
@@ -370,7 +370,7 @@
         </div>
 
         <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold text-sm py-4 rounded-2xl transition-all shadow-lg">
-          İlanı Hemen Yayınla
+          İlanı Buluta Kaydet & Yayınla
         </button>
       </form>
     </div>
@@ -464,8 +464,9 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let activeListingForOffer = null;
+    let cloudListings = [];
 
-    // HİKAYE VERİLERİ (Farklı sayfada gösterilmek üzere)
+    // HİKAYE VERİLERİ
     const storyDatabase = {
       1: {
         title: "Neden Eşyalarımızla Bağ Kurarız?",
@@ -495,7 +496,7 @@
 
     window.addEventListener('DOMContentLoaded', async () => {
       populateCities();
-      renderListings();
+      await fetchListingsFromSupabase();
 
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session && session.user) {
@@ -567,7 +568,7 @@
       { name: "Muğla", districts: ["Bodrum", "Dalaman", "Datça", "Fethiye", "Kavaklıdere", "Köyceğiz", "Marmaris", "Menteşe", "Milas", "Ortaca", "Seydikemer", "Ula", "Yatağan"] },
       { name: "Muş", districts: ["Bulanık", "Hasköy", "Korkut", "Malazgirt", "Merkez", "Varto"] },
       { name: "Nevşehir", districts: ["Acıgöl", "Avanos", "Derinkuyu", "Gülşehir", "Hacıbektaş", "Kozaklı", "Merkez", "Ürgüp"] },
-      { name: "Niğde", districts: ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"] },
+      { name: "Niğde", digests: [], districts: ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"] },
       { name: "Ordu", districts: ["Akkuş", "Altınordu", "Aybastı", "Çamaş", "Çatalpınar", "Çaybaşı", "Fatsa", "Gölköy", "Gülyalı", "Gürgentepe", "İkizce", "Kabadüz", "Kabataş", "Korgan", "Kumru", "Mesudiye", "Ünye", "Ulubey"] },
       { name: "Osmaniye", districts: ["Bahçe", "Düziçi", "Hasanbeyli", "Kadirli", "Merkez", "Sumbas", "Toprakkale"] },
       { name: "Rize", districts: ["Ardeşen", "Çamlıhemşin", "Çayeli", "Derepazarı", "Fındıklı", "Güneysu", "Hemşin", "İkizdere", "İyidere", "Kalkandere", "Merkez", "Pazar"] },
@@ -686,9 +687,29 @@
       }
     }
 
-    function handleCreateListing(event) {
+    // SUPABASE'DEN İLANLARI ÇEKME
+    async function fetchListingsFromSupabase() {
+      const container = document.getElementById('listingsGrid');
+      
+      const { data, error } = await supabaseClient
+        .from('listings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('İlanlar çekilemedi:', error.message);
+        return;
+      }
+
+      cloudListings = data || [];
+      renderListingsUI();
+    }
+
+    // SUPABASE'E YENİ İLAN EKLEME
+    async function handleCreateListing(event) {
       event.preventDefault();
-      const newItem = {
+      
+      const newListing = {
         id: Date.now(),
         title: document.getElementById('my-item').value,
         wanted: document.getElementById('wanted-item').value,
@@ -697,20 +718,25 @@
         image: uploadedImageBase64
       };
 
-      let saved = JSON.parse(localStorage.getItem('takassla_listings') || '[]');
-      saved.unshift(newItem);
-      localStorage.setItem('takassla_listings', JSON.stringify(saved));
-      renderListings();
+      const { error } = await supabaseClient
+        .from('listings')
+        .insert([newListing]);
 
-      alert('🎉 İlanınız başarıyla vitrinde yayınlandı!');
+      if (error) {
+        alert('İlan eklenirken hata oluştu: ' + error.message);
+        return;
+      }
+
+      alert('🎉 İlanınız başarıyla bulut vitrininde yayınlandı!');
       document.getElementById('createListingForm').reset();
       document.getElementById('uploadStatusText').innerText = "Fotoğraf Seçmek İçin Dokunun";
       showPage('home');
+      
+      await fetchListingsFromSupabase();
     }
 
     function openDetailModal(listingId) {
-      const saved = JSON.parse(localStorage.getItem('takassla_listings') || '[]');
-      const item = saved.find(l => l.id === listingId);
+      const item = cloudListings.find(l => l.id == listingId);
       if (!item) return;
 
       activeListingForOffer = item;
@@ -739,22 +765,21 @@
       closeDetailModal();
     }
 
-    function renderListings() {
+    function renderListingsUI() {
       const container = document.getElementById('listingsGrid');
       container.innerHTML = '';
-      const saved = JSON.parse(localStorage.getItem('takassla_listings') || '[]');
       
-      if (saved.length === 0) {
-        const defaultItems = [
-          { id: 1, title: '2016 Model Honda Civic', wanted: 'SUV Araç veya Arsa', desc: 'Aracım hatasız, boyasız temiz kullanıldı.', location: 'Seyhan, Adana', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80' },
-          { id: 2, title: 'iPhone 13 Pro 128GB', wanted: 'PlayStation 5 + Ek Üstü', desc: 'Pil sağlığı %88, kutulu faturalı.', location: 'Çankaya, Ankara', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80' },
-          { id: 3, title: '4 Kişilik Otomatik Kamp Çadırı', wanted: 'Kamp Ocağı ve Mat', desc: 'Sadece 1 kez kullanıldı, sıfır ayarında.', location: 'Bodrum, Muğla', image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80' }
-        ];
-        localStorage.setItem('takassla_listings', JSON.stringify(defaultItems));
-        saved.push(...defaultItems);
+      if (cloudListings.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-slate-200">
+            <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
+            <p class="text-sm font-bold text-slate-600">Henüz hiç ilan eklenmemiş.</p>
+            <p class="text-xs text-slate-400 mt-1">İlk ilanı sen ver, vitrini doldur!</p>
+          </div>`;
+        return;
       }
 
-      saved.forEach(item => {
+      cloudListings.forEach(item => {
         container.innerHTML += `
           <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between">
             <div>
@@ -779,8 +804,6 @@
           </div>`;
       });
     }
-
-    window.onload = function() { populateCities(); renderListings(); };
   </script>
 </body>
 </html>
