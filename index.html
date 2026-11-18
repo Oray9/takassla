@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>takassla.com - Paranı Unut, Takas Et!</title>
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⇄</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -31,52 +33,52 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased pb-20 lg:pb-0">
 
   <!-- TOP ANNOUNCEMENT BAR -->
-  <div class="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-accent text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center shadow-inner">
+  <div class="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-accent text-white text-[11px] sm:text-sm font-semibold py-2 px-3 text-center shadow-inner">
     ✨ Türkiye'nin İlk Paranızın Geçmediği Eğlenceli Takas Platformu! <span class="underline ml-1 cursor-pointer" onclick="showPage('home')">Nasıl Çalışır?</span>
   </div>
 
   <!-- HEADER / NAVIGATION -->
   <header class="sticky top-0 z-40 glass-effect border-b border-slate-200/80 shadow-sm transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20 gap-4">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-2 sm:gap-4">
         
         <!-- LOGO -->
-        <a href="#" onclick="showPage('home')" class="flex items-center gap-2 group">
-          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
-            <i class="fa-solid font-black text-xl">⇄</i>
+        <a href="#" onclick="showPage('home')" class="flex items-center gap-1.5 sm:gap-2 group shrink-0">
+          <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
+            <i class="fa-solid font-black text-lg sm:text-xl">⇄</i>
           </div>
           <div>
-            <span class="text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-brand-600 transition-colors">takass<span class="text-brand-500">la.com</span></span>
-            <span class="block text-[10px] font-bold text-slate-400 tracking-widest uppercase -mt-1">Akıllı Değişim</span>
+            <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-brand-600 transition-colors">takass<span class="text-brand-500">la.com</span></span>
+            <span class="hidden sm:block text-[10px] font-bold text-slate-400 tracking-widest uppercase -mt-1">Akıllı Değişim</span>
           </div>
         </a>
 
-        <!-- AKILLI ARAMA ÇUBUĞU -->
-        <div class="hidden md:flex flex-1 max-w-2xl mx-6">
+        <!-- AKILLI ARAMA ÇUBUĞU (ÖNERİ ÖZELLİKLİ) -->
+        <div class="hidden md:flex flex-1 max-w-2xl mx-4">
           <div class="w-full flex items-center bg-white border border-slate-300 rounded-full shadow-md hover:shadow-lg transition-shadow p-1.5 focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
             <div class="flex-1 px-4 border-r border-slate-200">
               <label class="block text-[10px] uppercase tracking-wider font-extrabold text-slate-400">Sende Ne Var?</label>
-              <input type="text" placeholder="Örn: iPhone 11, Kitap, Oyuncak..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
+              <input type="text" id="searchHaveInput" list="commonItems" placeholder="Örn: iPhone 13, Roman, Bisiklet..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
             </div>
             <div class="text-slate-300 px-1"><i class="fa-solid fa-arrows-rotate text-xs"></i></div>
             <div class="flex-1 px-4">
               <label class="block text-[10px] uppercase tracking-wider font-extrabold text-brand-600">Ne İstiyorsun?</label>
-              <input type="text" placeholder="Örn: PS5, Çocuk Arabası..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
+              <input type="text" id="searchWantedInput" list="commonItems" placeholder="Örn: PS5, Çocuk Arabası..." class="w-full text-sm font-medium text-slate-700 focus:outline-none placeholder:text-slate-400 bg-transparent">
             </div>
-            <button class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95">
+            <button onclick="executeHeaderSearch()" class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95">
               <i class="fa-solid fa-magnifying-glass text-sm"></i>
             </button>
           </div>
         </div>
 
-        <!-- SAĞ EYLEM BUTONLARI -->
-        <div class="flex items-center gap-3">
-          <button onclick="openAuthModal()" class="flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-brand-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition-colors border border-slate-200">
-            <i class="fa-solid fa-user text-brand-500"></i>
-            <span id="authButtonText">Giriş Yap / Üye Ol</span>
+        <!-- SAĞ EYLEM BUTONLARI (MOBİL UYUMLU) -->
+        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          <button onclick="openAuthModal()" class="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-brand-600 px-2.5 sm:px-3 py-2 rounded-xl hover:bg-slate-100 transition-colors border border-slate-200">
+            <i class="fa-solid fa-user text-brand-500 text-xs sm:text-sm"></i>
+            <span id="authButtonText" class="max-w-[70px] sm:max-w-none truncate">Giriş Yap</span>
           </button>
           
-          <button onclick="showPage('create')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm px-5 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2">
+          <button onclick="showPage('create')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1.5 sm:gap-2">
             <i class="fa-solid fa-plus text-brand-500"></i>
             <span>İlan Ver</span>
           </button>
@@ -85,6 +87,22 @@
       </div>
     </div>
   </header>
+
+  <!-- OTOMATİK ÜRÜN ÖNERİ LİSTESİ (DATALIST) -->
+  <datalist id="commonItems">
+    <option value="iPhone 13 / Akıllı Telefon">
+    <option value="2015 Model Honda Civic / Otomobil">
+    <option value="KPSS / YKS Kitap Seti">
+    <option value="Çocuk Oyuncak & Bebek Arabası">
+    <option value="PlayStation 5 / Konsol">
+    <option value="4 Kişilik Kamp Çadırı">
+    <option value="Dağ Bisikleti">
+    <option value="Akıllı Saat & Kol Saati">
+    <option value="Laptop / Dizüstü Bilgisayar">
+    <option value="Elektrikli Scooter">
+    <option value="Arsa / Tarla">
+    <option value="Masa Tenisi / Spor Aleti">
+  </datalist>
 
   <!-- PAGE 1: ANA SAYFA -->
   <div id="page-home" class="page-content">
@@ -127,7 +145,7 @@
       </div>
     </section>
 
-    <!-- FOTOĞRAFLI POPÜLER KATEGORİLER (YENİLENMİŞ) -->
+    <!-- FOTOĞRAFLI POPÜLER KATEGORİLER -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
@@ -137,7 +155,6 @@
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         
-        <!-- Kategori 1: Kitap & Eğitim -->
         <div onclick="filterByCategory('Kitap')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1495640388908-05fa85288e61?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -147,7 +164,6 @@
           </div>
         </div>
 
-        <!-- Kategori 2: Oyuncak & Bebek -->
         <div onclick="filterByCategory('Oyuncak')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -157,7 +173,6 @@
           </div>
         </div>
 
-        <!-- Kategori 3: Elektronik -->
         <div onclick="filterByCategory('Elektronik')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -167,7 +182,6 @@
           </div>
         </div>
 
-        <!-- Kategori 4: Otomobil -->
         <div onclick="filterByCategory('Otomobil')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -177,7 +191,6 @@
           </div>
         </div>
 
-        <!-- Kategori 5: Kamp & Outdoor -->
         <div onclick="filterByCategory('Kamp')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -187,7 +200,6 @@
           </div>
         </div>
 
-        <!-- Kategori 6: Askıda Takas -->
         <div onclick="filterByCategory('Askıda')" class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3] bg-slate-900 flex items-end p-4">
           <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -200,11 +212,11 @@
       </div>
     </section>
 
-    <!-- ANA İÇERİK VE SAĞ SÜTUN (SİDEBAR) DÜZENİ -->
+    <!-- ANA İÇERİK VE SAĞ SÜTUN -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         
-        <!-- SOL TARAF: VİTRİN İLANLARI (%75 GENİŞLİK) -->
+        <!-- VİTRİN İLANLARI -->
         <div class="lg:col-span-3">
           <div class="flex items-center justify-between mb-6">
             <div>
@@ -217,11 +229,11 @@
           </div>
 
           <div id="listingsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            <!-- İlanlar buluttan dinamik eklenecek -->
+            <!-- İlanlar buluttan yüklenecek -->
           </div>
         </div>
 
-        <!-- SAĞ TARAF: ATMAYA KIYAMADIKLARIMIZ & KÜLTÜR SÜTUNDU (%25 GENİŞLİK) -->
+        <!-- SAĞ SÜTUN: KÜLTÜR & HİKAYELER -->
         <div class="lg:col-span-1 space-y-6">
           <div class="bg-gradient-to-br from-slate-900 to-brand-dark rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-500/20 rounded-full blur-2xl pointer-events-none"></div>
@@ -234,7 +246,6 @@
 
             <div class="space-y-4 relative z-10">
               
-              <!-- Kart 1 -->
               <div onclick="openStoryPage(1)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
                   <div class="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
@@ -248,7 +259,6 @@
                 <span class="text-[10px] text-brand-300 font-bold mt-2 inline-block">Yazıyı Oku →</span>
               </div>
 
-              <!-- Kart 2 -->
               <div onclick="openStoryPage(2)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
                   <div class="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
@@ -262,7 +272,6 @@
                 <span class="text-[10px] text-emerald-300 font-bold mt-2 inline-block">Yazıyı Oku →</span>
               </div>
 
-              <!-- Kart 3 -->
               <div onclick="openStoryPage(3)" class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/20 transition-all cursor-pointer group">
                 <div class="flex items-center gap-2.5 mb-2">
                   <div class="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center text-white text-xs font-bold shrink-0 group-hover:scale-110 transition-transform">
@@ -310,9 +319,7 @@
 
         <hr class="border-slate-100">
 
-        <div id="storyPageText" class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-medium">
-          <!-- Detaylı hikaye içeriği buraya dinamik yüklenecek -->
-        </div>
+        <div id="storyPageText" class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-medium"></div>
 
         <div class="pt-8 border-t border-slate-100 flex justify-between items-center">
           <span class="text-xs text-slate-400 font-bold">takassla.com Kültür Köşesi</span>
@@ -324,7 +331,7 @@
     </div>
   </div>
 
-  <!-- PAGE 3: İLAN VERME FORMU -->
+  <!-- PAGE 3: İLAN VERME FORMU (ÖNERİ LİSTELİ) -->
   <div id="page-create" class="page-content hidden">
     <div class="max-w-2xl mx-auto px-4 mt-8">
       <button onclick="showPage('home')" class="text-xs font-bold text-brand-600 mb-4 inline-block">← Ana Sayfaya Dön</button>
@@ -337,12 +344,12 @@
         
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1.5">Elinizdeki Ürün / Araç Ne?</label>
-          <input id="my-item" type="text" required placeholder="Örn: KPSS Kitap Seti, LEGO Oyuncak, iPhone 13..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input id="my-item" type="text" list="commonItems" required placeholder="Yazmaya başlayın veya seçin..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
           
           <div class="flex flex-wrap gap-2 mt-2">
             <span class="text-[10px] text-slate-400 self-center font-semibold">Hızlı Seç:</span>
-            <button type="button" onclick="setMyItem('📚 YKS / KPSS / Roman Kitap Seti')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📚 Kitap</button>
-            <button type="button" onclick="setMyItem('🧸 Çocuk Oyuncak / Bebek Arabası')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">🧸 Oyuncak & Bebek</button>
+            <button type="button" onclick="setMyItem('📚 KPSS / YKS Kitap Seti')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📚 Kitap</button>
+            <button type="button" onclick="setMyItem('🧸 Çocuk Oyuncak & Bebek Arabası')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">🧸 Oyuncak</button>
             <button type="button" onclick="setMyItem('📱 iPhone / Akıllı Telefon')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">📱 Elektronik</button>
             <button type="button" onclick="setMyItem('🚗 2015 Model Honda Civic')" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl transition-colors">🚗 Otomobil</button>
           </div>
@@ -350,7 +357,7 @@
 
         <div>
           <label class="block text-xs font-extrabold text-brand-700 mb-1.5">Karşılığında Ne İstersiniz?</label>
-          <input id="wanted-item" type="text" required placeholder="Örn: Çocuk Bisikleti, Roman, Tablet..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input id="wanted-item" type="text" list="commonItems" required placeholder="Yazmaya başlayın veya seçin..." class="w-full text-sm p-3 bg-brand-50/50 border border-brand-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
           
           <div class="flex flex-wrap gap-2 mt-2">
             <span class="text-[10px] text-brand-400 self-center font-semibold">Hızlı Seç:</span>
@@ -364,7 +371,7 @@
           <textarea id="item-desc" rows="3" placeholder="Ürününüzün veya aracınızın durumunu yazın..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium resize-none"></textarea>
         </div>
 
-        <!-- 81 İL VE İLÇE SEÇİM ALANI -->
+        <!-- 81 İL VE İLÇE SEÇİMİ -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İl</label>
@@ -396,7 +403,7 @@
     </div>
   </div>
 
-  <!-- AUTH MODAL (GİRİŞ / ÜYE OL PENCERESİ) -->
+  <!-- AUTH MODAL -->
   <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative space-y-5">
       <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
@@ -428,7 +435,7 @@
     </div>
   </div>
 
-  <!-- DETAY & TEKLİF VERME MODAL (PENCERESİ) -->
+  <!-- DETAY & TEKLİF MODALI -->
   <div id="detailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto">
       <button onclick="closeDetailModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 font-bold">✕</button>
@@ -452,7 +459,6 @@
 
       <hr class="border-slate-100">
 
-      <!-- TAKAS TEKLİFİ GÖNDERME FORMU -->
       <div class="space-y-4">
         <div>
           <h3 class="text-base font-extrabold text-slate-900">Bu İlana Karşılık Ne Teklif Ediyorsun?</h3>
@@ -461,7 +467,7 @@
         
         <div>
           <label class="block text-xs font-extrabold text-slate-700 mb-1">Teklif Ettiğin Ürün / Eşya</label>
-          <input type="text" id="offerItemInput" placeholder="Örn: Roman Kitap Seti veya Oyuncak" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+          <input type="text" id="offerItemInput" list="commonItems" placeholder="Örn: Roman Kitap Seti veya Oyuncak" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
         </div>
 
         <div>
@@ -526,7 +532,7 @@
       }
     });
 
-    // TÜRKİYE'NİN TAM 81 İLİ VE İLÇELERİ
+    // TÜRKİYE'NİN 81 İL VE İLÇELERİ
     const turkeyData = [
       { name: "Adana", districts: ["Aladağ", "Ceyhan", "Çukurova", "Feke", "İmamoğlu", "Karaisalı", "Kozan", "Pozantı", "Saimbeyli", "Sarıçam", "Seyhan", "Tufanbeyli", "Yumurtalık", "Yüreğir"] },
       { name: "Adıyaman", districts: ["Besni", "Çelikhan", "Gerger", "Gölbaşı", "Kahta", "Merkez", "Samsat", "Sincik", "Tut"] },
@@ -708,7 +714,7 @@
       }
     }
 
-    // SUPABASE'DEN İLANLARI ÇEKME VE FİLTRELEME
+    // SUPABASE'DEN İLANLARI ÇEKME
     async function fetchListingsFromSupabase() {
       const { data, error } = await supabaseClient
         .from('listings')
@@ -724,6 +730,21 @@
       renderListingsUI();
     }
 
+    // HEADER ARAMA ÇUBUĞU FONKSİYONU
+    function executeHeaderSearch() {
+      const haveVal = document.getElementById('searchHaveInput').value.trim();
+      const wantedVal = document.getElementById('searchWantedInput').value.trim();
+      
+      currentFilterKeyword = haveVal || wantedVal;
+      if (currentFilterKeyword) {
+        document.getElementById('filterInfoText').innerText = `"${currentFilterKeyword}" için arama sonuçları`;
+        document.getElementById('resetFilterBtn').classList.remove('hidden');
+      } else {
+        resetFilter();
+      }
+      renderListingsUI();
+    }
+
     function filterByCategory(keyword) {
       currentFilterKeyword = keyword.toLowerCase();
       document.getElementById('filterInfoText').innerText = `"${keyword}" kategorisindeki ilanlar listeleniyor`;
@@ -733,6 +754,8 @@
 
     function resetFilter() {
       currentFilterKeyword = "";
+      document.getElementById('searchHaveInput').value = "";
+      document.getElementById('searchWantedInput').value = "";
       document.getElementById('filterInfoText').innerText = "Sana yakın en son eklenen takas fırsatları";
       document.getElementById('resetFilterBtn').classList.add('hidden');
       renderListingsUI();
@@ -804,10 +827,12 @@
       
       let filtered = cloudListings;
       if (currentFilterKeyword) {
+        const kw = currentFilterKeyword.toLowerCase();
         filtered = cloudListings.filter(item => 
-          item.title.toLowerCase().includes(currentFilterKeyword) || 
-          item.item_desc.toLowerCase().includes(currentFilterKeyword) ||
-          item.wanted.toLowerCase().includes(currentFilterKeyword)
+          item.title.toLowerCase().includes(kw) || 
+          item.item_desc.toLowerCase().includes(kw) ||
+          item.wanted.toLowerCase().includes(kw) ||
+          item.location.toLowerCase().includes(kw)
         );
       }
       
@@ -815,8 +840,8 @@
         container.innerHTML = `
           <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-slate-200">
             <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-            <p class="text-sm font-bold text-slate-600">Bu kategoride henüz ilan bulunmuyor.</p>
-            <p class="text-xs text-slate-400 mt-1">İlk ilanı sen vererek bu kategoriyi doldurabilirsin!</p>
+            <p class="text-sm font-bold text-slate-600">Aradığınız kriterde ilan bulunamadı.</p>
+            <p class="text-xs text-slate-400 mt-1">Farklı bir kelime arayabilir veya ilk ilanı siz verebilirsiniz!</p>
           </div>`;
         return;
       }
