@@ -53,7 +53,7 @@
           </div>
         </a>
 
-        <!-- AKILLI ARAMA ÇUBUĞU (ÖNERİ ÖZELLİKLİ) -->
+        <!-- AKILLI ARAMA ÇUBUĞU -->
         <div class="hidden md:flex flex-1 max-w-2xl mx-4">
           <div class="w-full flex items-center bg-white border border-slate-300 rounded-full shadow-md hover:shadow-lg transition-shadow p-1.5 focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
             <div class="flex-1 px-4 border-r border-slate-200">
@@ -71,7 +71,7 @@
           </div>
         </div>
 
-        <!-- SAĞ EYLEM BUTONLARI (MOBİL UYUMLU) -->
+        <!-- SAĞ EYLEM BUTONLARI -->
         <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <button onclick="openAuthModal()" class="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-brand-600 px-2.5 sm:px-3 py-2 rounded-xl hover:bg-slate-100 transition-colors border border-slate-200">
             <i class="fa-solid fa-user text-brand-500 text-xs sm:text-sm"></i>
@@ -88,7 +88,7 @@
     </div>
   </header>
 
-  <!-- OTOMATİK ÜRÜN ÖNERİ LİSTESİ (DATALIST) -->
+  <!-- OTOMATİK ÜRÜN ÖNERİ LİSTESİ -->
   <datalist id="commonItems">
     <option value="iPhone 13 / Akıllı Telefon">
     <option value="2015 Model Honda Civic / Otomobil">
@@ -214,13 +214,30 @@
 
     <!-- ANA İÇERİK VE SAĞ SÜTUN -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+      
+      <!-- BOŞ DURUM (EMPTY STATE) BİLGİLENDİRME ALANI (DİNAMİK GÖSTERİLİR) -->
+      <div id="emptyCategoryBanner" class="hidden mb-8 bg-gradient-to-r from-brand-50 to-orange-50 border border-brand-200 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+        <div class="flex items-center gap-4 text-center sm:text-left">
+          <div class="w-14 h-14 rounded-2xl bg-brand-500 text-white flex items-center justify-center text-2xl shadow-md shrink-0 mx-auto sm:mx-0">
+            <i class="fa-solid fa-box-open"></i>
+          </div>
+          <div>
+            <h3 id="emptyBannerTitle" class="text-lg font-extrabold text-slate-900">Bu kategoride henüz ilan bulunmuyor</h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Türkiye'nin ilk paranın geçmediği platformunda bu kategorinin ilk ilanı sen ver, vitrini doldur!</p>
+          </div>
+        </div>
+        <button onclick="showPage('create')" class="bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-lg transition-all shrink-0 hover:scale-105">
+          + Bu Kategoride İlan Ver
+        </button>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         
         <!-- VİTRİN İLANLARI -->
         <div class="lg:col-span-3">
           <div class="flex items-center justify-between mb-6">
             <div>
-              <h2 class="text-xl font-extrabold text-slate-900">Vitrin İlanları</h2>
+              <h2 id="sectionMainTitle" class="text-xl font-extrabold text-slate-900">Vitrin İlanları</h2>
               <p id="filterInfoText" class="text-xs text-slate-500 font-medium">Sana yakın en son eklenen takas fırsatları</p>
             </div>
             <button id="resetFilterBtn" onclick="resetFilter()" class="hidden text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1.5 rounded-xl border border-brand-200 hover:bg-brand-100 transition-colors">
@@ -331,7 +348,7 @@
     </div>
   </div>
 
-  <!-- PAGE 3: İLAN VERME FORMU (ÖNERİ LİSTELİ) -->
+  <!-- PAGE 3: İLAN VERME FORMU -->
   <div id="page-create" class="page-content hidden">
     <div class="max-w-2xl mx-auto px-4 mt-8">
       <button onclick="showPage('home')" class="text-xs font-bold text-brand-600 mb-4 inline-block">← Ana Sayfaya Dön</button>
@@ -371,7 +388,6 @@
           <textarea id="item-desc" rows="3" placeholder="Ürününüzün veya aracınızın durumunu yazın..." class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium resize-none"></textarea>
         </div>
 
-        <!-- 81 İL VE İLÇE SEÇİMİ -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-extrabold text-slate-700 mb-1.5">İl</label>
@@ -493,7 +509,6 @@
     let cloudListings = [];
     let currentFilterKeyword = "";
 
-    // HİKAYE VERİLERİ
     const storyDatabase = {
       1: {
         title: "Neden Eşyalarımızla Bağ Kurarız?",
@@ -532,7 +547,6 @@
       }
     });
 
-    // TÜRKİYE'NİN 81 İL VE İLÇELERİ
     const turkeyData = [
       { name: "Adana", districts: ["Aladağ", "Ceyhan", "Çukurova", "Feke", "İmamoğlu", "Karaisalı", "Kozan", "Pozantı", "Saimbeyli", "Sarıçam", "Seyhan", "Tufanbeyli", "Yumurtalık", "Yüreğir"] },
       { name: "Adıyaman", districts: ["Besni", "Çelikhan", "Gerger", "Gölbaşı", "Kahta", "Merkez", "Samsat", "Sincik", "Tut"] },
@@ -714,7 +728,6 @@
       }
     }
 
-    // SUPABASE'DEN İLANLARI ÇEKME
     async function fetchListingsFromSupabase() {
       const { data, error } = await supabaseClient
         .from('listings')
@@ -730,7 +743,6 @@
       renderListingsUI();
     }
 
-    // HEADER ARAMA ÇUBUĞU FONKSİYONU
     function executeHeaderSearch() {
       const haveVal = document.getElementById('searchHaveInput').value.trim();
       const wantedVal = document.getElementById('searchWantedInput').value.trim();
@@ -761,7 +773,6 @@
       renderListingsUI();
     }
 
-    // SUPABASE'E YENİ İLAN EKLEME
     async function handleCreateListing(event) {
       event.preventDefault();
       
@@ -825,28 +836,46 @@
       const container = document.getElementById('listingsGrid');
       container.innerHTML = '';
       
-      let filtered = cloudListings;
+      let matchedListings = cloudListings;
+      let isFiltered = false;
+
       if (currentFilterKeyword) {
+        isFiltered = true;
         const kw = currentFilterKeyword.toLowerCase();
-        filtered = cloudListings.filter(item => 
+        matchedListings = cloudListings.filter(item => 
           item.title.toLowerCase().includes(kw) || 
           item.item_desc.toLowerCase().includes(kw) ||
           item.wanted.toLowerCase().includes(kw) ||
           item.location.toLowerCase().includes(kw)
         );
       }
-      
-      if (filtered.length === 0) {
+
+      const emptyBanner = document.getElementById('emptyCategoryBanner');
+      const sectionMainTitle = document.getElementById('sectionMainTitle');
+
+      if (isFiltered && matchedListings.length === 0) {
+        emptyBanner.classList.remove('hidden');
+        document.getElementById('emptyBannerTitle').innerText = `"${currentFilterKeyword}" kategorisinde henüz ilan yok`;
+        sectionMainTitle.innerText = "Türkiye Genelindeki Diğer Takas Fırsatları";
+      } else {
+        emptyBanner.classList.add('hidden');
+        sectionMainTitle.innerText = isFiltered ? `"${currentFilterKeyword}" Arama Sonuçları` : "Vitrin İlanları";
+      }
+
+      // EĞER FİLTRELENEN KATEGORİDE İLAN YOKSA BİLE KULLANICI ÇIKMAZA GİRMESİN DİYE DİĞER TÜM İLANLARI ALTTA GÖSTERİYORUZ
+      const displayList = (isFiltered && matchedListings.length === 0) ? cloudListings : matchedListings;
+
+      if (displayList.length === 0) {
         container.innerHTML = `
-          <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-slate-200">
+          <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-slate-200 shadow-sm">
             <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-            <p class="text-sm font-bold text-slate-600">Aradığınız kriterde ilan bulunamadı.</p>
-            <p class="text-xs text-slate-400 mt-1">Farklı bir kelime arayabilir veya ilk ilanı siz verebilirsiniz!</p>
+            <p class="text-sm font-bold text-slate-600">Henüz hiç ilan eklenmemiş.</p>
+            <p class="text-xs text-slate-400 mt-1">İlk ilanı sen vererek vitrini doldur!</p>
           </div>`;
         return;
       }
 
-      filtered.forEach(item => {
+      displayList.forEach(item => {
         container.innerHTML += `
           <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between">
             <div>
